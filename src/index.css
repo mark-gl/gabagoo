@@ -1,0 +1,49 @@
+.body {
+  overflow: hidden;
+}
+
+.tracklist {
+  width: 100%;
+  height: calc(100vh - 100px); /* Adjust the height to account for footer */
+}
+
+.progress {
+  width: 100%;
+}
+
+.player-info {
+  width: 700px;
+}
+
+.player-footer {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space the children evenly */
+  padding: 0 20px; /* Add some padding */
+}
+
+.player-controls,
+.player-right-controls {
+  display: flex;
+  align-items: center;
+}
+
+.control-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.control-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.right-button {
+  margin-left: 20px;
+}
+
+#volumeSlider {
+  width: 100px;
+}
