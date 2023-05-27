@@ -66,7 +66,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
     // animateRows: true,
     columnDefs: [
       { field: "title", resizable: true, sortable: true, flex: 2 },
-      { field: "length", resizable: true, sortable: true, filter: false, flex: 0.5 },
+      {
+        field: "length", resizable: true, sortable: true, filter: false, flex: 0.5, cellRenderer: function (params) {
+          return formatDuration(params.value);
+        }
+      },
       { field: "artist", resizable: true, sortable: true, flex: 1 },
       { field: "album artist", resizable: true, sortable: true, flex: 1 },
       { field: "album", resizable: true, sortable: true, flex: 1 },
@@ -160,6 +164,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   document.addEventListener("mouseup", function (e) {
     progressMouseDown = false;
+  });
+
+  document.getElementById("currentTrackTitle").addEventListener("click", function () {
+    gridOptions.api.ensureIndexVisible(currentTrackIndex, 'middle');
   });
 
   document.getElementById("volumeSlider").oninput = function () {
@@ -263,7 +271,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           artist: iTunesData.get("\u00A9ART"),
           "album artist": iTunesData.get("aART"),
           album: iTunesData.get("\u00A9alb"),
-          length: formatDuration(metadata.format.duration),
+          length: metadata.format.duration,
           genre: iTunesData.get("gnre") || iTunesData.get("\u00A9gen"),
           year: iTunesData.get("\u00A9day"),
           url: url,
@@ -279,7 +287,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             (metadata.common.albumartist && [metadata.common.albumartist]),
           "album artist": metadata.common.albumartist,
           album: metadata.common.album,
-          length: formatDuration(metadata.format.duration),
+          length: metadata.format.duration,
           genre: metadata.common.genre
             ? metadata.common.genre.join(", ")
             : null,
@@ -350,7 +358,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("currentTrackTitle").textContent = track.title;
       document.getElementById("currentTrackArtist").textContent = track.artist;
       document.getElementById("currentTrackArt").src = track.coverArt;
-      document.getElementById("duration").textContent = track.length;
+      document.getElementById("duration").textContent = formatDuration(track.length);
       currentTrackIndex = index;
       audio.addEventListener("timeupdate", function () {
         document.getElementById("elapsed").textContent = formatDuration(audio.currentTime);
