@@ -70476,13 +70476,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
       }
     },
     columnDefs: [
-      { field: "title", resizable: true, sortable: true },
-      { field: "artist", resizable: true, sortable: true },
-      { field: "album artist", resizable: true, sortable: true },
-      { field: "album", resizable: true, sortable: true },
-      { field: "length", resizable: true, sortable: true },
-      { field: "genre", resizable: true, sortable: true },
-      { field: "year", resizable: true, sortable: true },
+      { field: "title", resizable: true, sortable: true, flex: 2 },
+      { field: "length", resizable: true, sortable: true, flex: 0.5 },
+      { field: "artist", resizable: true, sortable: true, flex: 1 },
+      { field: "album artist", resizable: true, sortable: true, flex: 1 },
+      { field: "album", resizable: true, sortable: true, flex: 1 },
+      { field: "genre", resizable: true, sortable: true, flex: 1 },
+      { field: "year", resizable: true, sortable: true, flex: 0.5 },
     ],
     onRowDoubleClicked: function (event) {
       const index = tracks.findIndex((track) => track.url === event.data.url);
@@ -70670,7 +70670,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("progressText").innerHTML =
         "Loading... (" + (totalAudioFiles - i - 1) + " tracks left)";
     }
-    document.getElementById("progressText").innerHTML = "Done!";
+    document.getElementById("progressText").innerHTML = "";
   }
 
   async function getMetadata(file) {
@@ -70712,6 +70712,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("currentTrackArt").src = track.coverArt;
       currentTrackIndex = index;
       audio.addEventListener("timeupdate", function () {
+        document.getElementById("elapsed").textContent = formatDuration(audio.currentTime);
+        // Should probably move this
+        document.getElementById("duration").textContent = formatDuration(audio.duration);
         const progressBar = document.getElementById("progressBar");
         const percentage = (audio.currentTime / audio.duration) * 100;
         progressBar.value = percentage;
