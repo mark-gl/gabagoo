@@ -71228,7 +71228,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const { Grid } = require("ag-grid-community");
   const Split = require("split.js");
 
-  let totalAudioFiles = 0;
   let currentTrackIndex = null;
   let tracks = [];
   let audio;
@@ -71282,6 +71281,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
     suppressCellFocus: true,
     suppressDragLeaveHidesColumns: true,
     rowSelection: "multiple",
+    getRowStyle: function (params) {
+      if (params.node.rowIndex === currentTrackIndex) {
+        return { fontWeight: "bold" };
+      } else {
+        return null;
+      }
+    },
     // animateRows: true,
     columnDefs: [
       { field: "title", resizable: true, sortable: true, flex: 2 },
@@ -71321,6 +71327,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const eGridDiv = document.querySelector("#myGrid");
 
   new Grid(eGridDiv, gridOptions);
+
+  gridOptions.api.addEventListener('sortChanged', function () {
+    const newTracks = [];
+    // (This is bad)
+    for (let i = 0; i < gridOptions.api.getDisplayedRowCount(); i++) {
+      const rowNode = gridOptions.api.getDisplayedRowAtIndex(i);
+      const track = rowNode.data;
+      newTracks.push(track);
+    }
+    const currentTrackUrl = tracks[currentTrackIndex].url;
+    tracks = newTracks;
+    currentTrackIndex = tracks.findIndex(track => track.url === currentTrackUrl);
+    gridOptions.api.redrawRows();
+  });
 
   const button1 = document.getElementById("loadButton");
   button1.addEventListener("click", loadAudioFiles);
@@ -71428,7 +71448,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       await getDirectory();
     }
 
-    totalAudioFiles = 0;
+    let totalAudioFiles = 0;
     document.getElementById("progressText").innerHTML = "Loading...";
 
     const fileHandles = await getAudioFileHandles(libraryDirectory);
@@ -71499,8 +71519,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
       tracks.push(track);
       gridOptions.api.applyTransaction({ add: [track] });
-
-      const progress = ((i + 1) / totalAudioFiles) * 100;
       document.getElementById("progressText").innerHTML =
         "Loading... (" + (totalAudioFiles - i - 1) + " tracks left)";
     }

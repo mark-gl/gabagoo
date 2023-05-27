@@ -202,3 +202,7 @@ progress::-moz-progress-bar {
   width: 16px;
   height: 16px;
 }
+
+.ag-row.playing {
+  background-color: blue;
+}
