@@ -175,6 +175,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
       const url = URL.createObjectURL(fileHandles[i]);
 
       let track;
+      let coverArt;
+      if (metadata.common.picture && metadata.common.picture[0]) {
+        let picture = metadata.common.picture[0];
+        let urlCreator = window.URL || window.webkitURL;
+        let imageUrl = urlCreator.createObjectURL(
+          new Blob([picture.data], { type: picture.format })
+        );
+        coverArt = imageUrl;
+      }
       if (metadata.native && metadata.native.iTunes) {
         const iTunesData = new Map(
           metadata.native.iTunes.map((item) => [item.id, item.value])
@@ -189,6 +198,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           year: iTunesData.get("\u00A9day"),
           url: url,
           index: tracks.length,
+          coverArt: coverArt,
         };
       } else {
         track = {
@@ -206,6 +216,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           year: metadata.common.year,
           url: url,
           index: tracks.length,
+          coverArt: coverArt,
           // disk: common.disk,
           // track: common.track.no,
         };
@@ -258,6 +269,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
       document.getElementById("currentTrackTitle").textContent = track.title;
       document.getElementById("currentTrackArtist").textContent = track.artist;
+      document.getElementById("currentTrackArt").src = track.coverArt;
       currentTrackIndex = index;
       audio.addEventListener("timeupdate", function () {
         const progressBar = document.getElementById("progressBar");
