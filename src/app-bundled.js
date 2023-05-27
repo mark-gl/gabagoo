@@ -71257,7 +71257,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   ro.observe(document.body);
 
   const gutter = document.querySelector('.gutter.gutter-horizontal');
-  gutter.addEventListener('mousedown', () => {
+  gutter.addEventListener('click', () => {
     if (sidebarWidth === 0) {
       splitInstance.setSizes([12, 88]);
     }
@@ -71345,11 +71345,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const progressBar = document.getElementById("progressBar");
 
   progressBar.addEventListener("mousedown", function (e) {
-    progressMouseDown = true;
-    const progressBarWidth = this.offsetWidth;
-    const clickPosition = e.pageX - getOffsetLeft(this);
-    const percentage = clickPosition / progressBarWidth;
-    audio.currentTime = audio.duration * percentage;
+    if (audio) {
+      progressMouseDown = true;
+      const progressBarWidth = this.offsetWidth;
+      const clickPosition = e.pageX - getOffsetLeft(this);
+      const percentage = clickPosition / progressBarWidth;
+      audio.currentTime = audio.duration * percentage;
+    }
   });
 
   document.addEventListener("mousemove", function (e) {
