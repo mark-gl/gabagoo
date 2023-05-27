@@ -57023,7 +57023,7 @@ Object.defineProperty(fileType, 'mimeTypes', {
 module.exports = fileType;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./supported":10,"./util":11,"buffer":4,"strtok3/lib/core":117,"token-types":118}],10:[function(require,module,exports){
+},{"./supported":10,"./util":11,"buffer":4,"strtok3/lib/core":118,"token-types":119}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -58249,7 +58249,7 @@ class AIFFParser extends BasicParser_1.BasicParser {
 }
 exports.AIFFParser = AIFFParser;
 
-},{"../common/BasicParser":29,"../common/FourCC":32,"../id3v2/ID3v2Parser":50,"../iff":52,"./AiffToken":20,"debug":6,"strtok3/lib/core":117,"token-types":118}],19:[function(require,module,exports){
+},{"../common/BasicParser":29,"../common/FourCC":32,"../id3v2/ID3v2Parser":50,"../iff":52,"./AiffToken":20,"debug":6,"strtok3/lib/core":118,"token-types":119}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AiffTagMapper = void 0;
@@ -58320,7 +58320,7 @@ class Common {
 }
 exports.Common = Common;
 
-},{"../common/FourCC":32,"token-types":118}],21:[function(require,module,exports){
+},{"../common/FourCC":32,"token-types":119}],21:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -58488,7 +58488,7 @@ class APEv2Parser extends BasicParser_1.BasicParser {
 exports.APEv2Parser = APEv2Parser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/BasicParser":29,"../common/Util":37,"./APEv2Token":23,"buffer":4,"debug":6,"strtok3/lib/core":117,"token-types":118}],22:[function(require,module,exports){
+},{"../common/BasicParser":29,"../common/Util":37,"./APEv2Token":23,"buffer":4,"debug":6,"strtok3/lib/core":118,"token-types":119}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.APEv2TagMapper = void 0;
@@ -58704,7 +58704,7 @@ function isBitSet(num, bit) {
 }
 exports.isBitSet = isBitSet;
 
-},{"../common/FourCC":32,"token-types":118}],24:[function(require,module,exports){
+},{"../common/FourCC":32,"token-types":119}],24:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 // ASF Objects
@@ -59089,7 +59089,7 @@ class WmPictureToken {
 exports.WmPictureToken = WmPictureToken;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/Util":37,"../id3v2/ID3v2Token":51,"./AsfUtil":27,"./GUID":28,"buffer":4,"token-types":118}],25:[function(require,module,exports){
+},{"../common/Util":37,"../id3v2/ID3v2Token":51,"./AsfUtil":27,"./GUID":28,"buffer":4,"token-types":119}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AsfParser = void 0;
@@ -59365,7 +59365,7 @@ AsfUtil.attributeParsers = [
 exports.AsfUtil = AsfUtil;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/Util":37,"buffer":4,"token-types":118}],28:[function(require,module,exports){
+},{"../common/Util":37,"buffer":4,"token-types":119}],28:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -60364,7 +60364,7 @@ async function scanAppendingHeaders(randomReader, options = {}) {
 }
 exports.scanAppendingHeaders = scanAppendingHeaders;
 
-},{"./ParserFactory":17,"./apev2/APEv2Parser":21,"./common/RandomUint8ArrayReader":36,"./id3v1/ID3v1Parser":44,"./lyrics3/Lyrics3":53,"strtok3/lib/core":117}],39:[function(require,module,exports){
+},{"./ParserFactory":17,"./apev2/APEv2Parser":21,"./common/RandomUint8ArrayReader":36,"./id3v1/ID3v1Parser":44,"./lyrics3/Lyrics3":53,"strtok3/lib/core":118}],39:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DsdiffParser = void 0;
@@ -60509,7 +60509,7 @@ class DsdiffParser extends BasicParser_1.BasicParser {
 }
 exports.DsdiffParser = DsdiffParser;
 
-},{"../common/BasicParser":29,"../common/FourCC":32,"../id3v2/ID3v2Parser":50,"./DsdiffToken":40,"debug":6,"strtok3/lib/core":117,"token-types":118}],40:[function(require,module,exports){
+},{"../common/BasicParser":29,"../common/FourCC":32,"../id3v2/ID3v2Parser":50,"./DsdiffToken":40,"debug":6,"strtok3/lib/core":118,"token-types":119}],40:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChunkHeader64 = void 0;
@@ -60532,7 +60532,7 @@ exports.ChunkHeader64 = {
     }
 };
 
-},{"../common/FourCC":32,"token-types":118}],41:[function(require,module,exports){
+},{"../common/FourCC":32,"token-types":119}],41:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FormatChunk = exports.ChannelType = exports.DsdChunk = exports.ChunkHeader = void 0;
@@ -60588,7 +60588,7 @@ exports.FormatChunk = {
     }
 };
 
-},{"../common/FourCC":32,"token-types":118}],42:[function(require,module,exports){
+},{"../common/FourCC":32,"token-types":119}],42:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DsfParser = void 0;
@@ -60823,7 +60823,7 @@ Metadata.BlockStreamInfo = {
     }
 };
 
-},{"../common/FourCC":32,"../common/Util":37,"../id3v2/AbstractID3Parser":46,"../ogg/vorbis/Vorbis":79,"../ogg/vorbis/VorbisDecoder":80,"../ogg/vorbis/VorbisParser":81,"debug":6,"token-types":118}],44:[function(require,module,exports){
+},{"../common/FourCC":32,"../common/Util":37,"../id3v2/AbstractID3Parser":46,"../ogg/vorbis/Vorbis":79,"../ogg/vorbis/VorbisDecoder":80,"../ogg/vorbis/VorbisParser":81,"debug":6,"token-types":119}],44:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -60961,7 +60961,7 @@ async function hasID3v1Header(reader) {
 exports.hasID3v1Header = hasID3v1Header;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../apev2/APEv2Parser":21,"../common/BasicParser":29,"../common/Util":37,"buffer":4,"debug":6,"token-types":118}],45:[function(require,module,exports){
+},{"../apev2/APEv2Parser":21,"../common/BasicParser":29,"../common/Util":37,"buffer":4,"debug":6,"token-types":119}],45:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ID3v1TagMapper = void 0;
@@ -61047,7 +61047,7 @@ class AbstractID3Parser extends BasicParser_1.BasicParser {
 }
 exports.AbstractID3Parser = AbstractID3Parser;
 
-},{"../common/BasicParser":29,"../id3v1/ID3v1Parser":44,"./ID3v2Parser":50,"./ID3v2Token":51,"debug":6,"strtok3/lib/core":117}],47:[function(require,module,exports){
+},{"../common/BasicParser":29,"../id3v1/ID3v1Parser":44,"./ID3v2Parser":50,"./ID3v2Token":51,"debug":6,"strtok3/lib/core":118}],47:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -61380,7 +61380,7 @@ class FrameParser {
 exports.FrameParser = FrameParser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/Util":37,"../id3v1/ID3v1Parser":44,"./ID3v2Token":51,"buffer":4,"debug":6,"token-types":118}],48:[function(require,module,exports){
+},{"../common/Util":37,"../id3v1/ID3v1Parser":44,"./ID3v2Token":51,"buffer":4,"debug":6,"token-types":119}],48:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ID3v22TagMapper = exports.id3v22TagMap = void 0;
@@ -61818,7 +61818,7 @@ class ID3v2Parser {
 exports.ID3v2Parser = ID3v2Parser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/Util":37,"./FrameParser":47,"./ID3v2Token":51,"buffer":4,"token-types":118}],51:[function(require,module,exports){
+},{"../common/Util":37,"./FrameParser":47,"./ID3v2Token":51,"buffer":4,"token-types":119}],51:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TextEncodingToken = exports.ExtendedHeader = exports.ID3v2Header = exports.UINT32SYNCSAFE = exports.AttachedPictureType = void 0;
@@ -61926,7 +61926,7 @@ exports.TextEncodingToken = {
     }
 };
 
-},{"../common/Util":37,"token-types":118}],52:[function(require,module,exports){
+},{"../common/Util":37,"token-types":119}],52:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Header = void 0;
@@ -61947,7 +61947,7 @@ exports.Header = {
     }
 };
 
-},{"../common/FourCC":32,"token-types":118}],53:[function(require,module,exports){
+},{"../common/FourCC":32,"token-types":119}],53:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -62490,7 +62490,7 @@ class MatroskaParser extends BasicParser_1.BasicParser {
 exports.MatroskaParser = MatroskaParser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/BasicParser":29,"./MatroskaDtd":54,"./types":57,"buffer":4,"debug":6,"token-types":118}],56:[function(require,module,exports){
+},{"../common/BasicParser":29,"./MatroskaDtd":54,"./types":57,"buffer":4,"debug":6,"token-types":119}],56:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MatroskaTagMapper = void 0;
@@ -63045,7 +63045,7 @@ function readTokenTable(buf, token, off, remainingLen, numberOfEntries) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/FourCC":32,"buffer":4,"debug":6,"token-types":118}],60:[function(require,module,exports){
+},{"../common/FourCC":32,"buffer":4,"debug":6,"token-types":119}],60:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -63560,7 +63560,7 @@ class MP4Parser extends BasicParser_1.BasicParser {
 exports.MP4Parser = MP4Parser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/BasicParser":29,"../id3v1/ID3v1Parser":44,"../type":85,"./Atom":58,"./AtomToken":59,"buffer":4,"debug":6,"token-types":118}],61:[function(require,module,exports){
+},{"../common/BasicParser":29,"../id3v1/ID3v1Parser":44,"../type":85,"./Atom":58,"./AtomToken":59,"buffer":4,"debug":6,"token-types":119}],61:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MP4TagMapper = exports.tagType = void 0;
@@ -63710,7 +63710,7 @@ exports.ExtendedLameHeader = {
     }
 };
 
-},{"../common/Util":37,"./ReplayGainDataFormat":64,"token-types":118}],63:[function(require,module,exports){
+},{"../common/Util":37,"./ReplayGainDataFormat":64,"token-types":119}],63:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -64238,7 +64238,7 @@ class MpegParser extends AbstractID3Parser_1.AbstractID3Parser {
 exports.MpegParser = MpegParser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/Util":37,"../id3v2/AbstractID3Parser":46,"./XingTag":65,"buffer":4,"debug":6,"strtok3/lib/core":117,"token-types":118}],64:[function(require,module,exports){
+},{"../common/Util":37,"../id3v2/AbstractID3Parser":46,"./XingTag":65,"buffer":4,"debug":6,"strtok3/lib/core":118,"token-types":119}],64:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReplayGain = void 0;
@@ -64382,7 +64382,7 @@ async function readXingHeader(tokenizer) {
 exports.readXingHeader = readXingHeader;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/Util":37,"./ExtendedLameHeader":62,"buffer":4,"token-types":118}],66:[function(require,module,exports){
+},{"../common/Util":37,"./ExtendedLameHeader":62,"buffer":4,"token-types":119}],66:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const debug_1 = require("debug");
@@ -64416,7 +64416,7 @@ class MusepackParser extends AbstractID3Parser_1.AbstractID3Parser {
 }
 exports.default = MusepackParser;
 
-},{"../id3v2/AbstractID3Parser":46,"./sv7/MpcSv7Parser":68,"./sv8/MpcSv8Parser":70,"debug":6,"token-types":118}],67:[function(require,module,exports){
+},{"../id3v2/AbstractID3Parser":46,"./sv7/MpcSv7Parser":68,"./sv8/MpcSv8Parser":70,"debug":6,"token-types":119}],67:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BitReader = void 0;
@@ -64472,7 +64472,7 @@ class BitReader {
 }
 exports.BitReader = BitReader;
 
-},{"token-types":118}],68:[function(require,module,exports){
+},{"token-types":119}],68:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MpcSv7Parser = void 0;
@@ -64565,7 +64565,7 @@ exports.Header = {
 };
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../../common/Util":37,"buffer":4,"token-types":118}],70:[function(require,module,exports){
+},{"../../common/Util":37,"buffer":4,"token-types":119}],70:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MpcSv8Parser = void 0;
@@ -64704,7 +64704,7 @@ class StreamReader {
 }
 exports.StreamReader = StreamReader;
 
-},{"../../common/Util":37,"debug":6,"token-types":118}],72:[function(require,module,exports){
+},{"../../common/Util":37,"debug":6,"token-types":119}],72:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -64834,7 +64834,7 @@ OggParser.Header = {
 exports.OggParser = OggParser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../common/BasicParser":29,"../common/FourCC":32,"../common/Util":37,"./opus/OpusParser":74,"./speex/SpeexParser":76,"./theora/TheoraParser":78,"./vorbis/VorbisParser":81,"buffer":4,"debug":6,"strtok3/lib/core":117,"token-types":118}],73:[function(require,module,exports){
+},{"../common/BasicParser":29,"../common/FourCC":32,"../common/Util":37,"./opus/OpusParser":74,"./speex/SpeexParser":76,"./theora/TheoraParser":78,"./vorbis/VorbisParser":81,"buffer":4,"debug":6,"strtok3/lib/core":118,"token-types":119}],73:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IdHeader = void 0;
@@ -64864,7 +64864,7 @@ class IdHeader {
 }
 exports.IdHeader = IdHeader;
 
-},{"token-types":118}],74:[function(require,module,exports){
+},{"token-types":119}],74:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpusParser = void 0;
@@ -64922,7 +64922,7 @@ class OpusParser extends VorbisParser_1.VorbisParser {
 }
 exports.OpusParser = OpusParser;
 
-},{"../vorbis/VorbisParser":81,"./Opus":73,"token-types":118}],75:[function(require,module,exports){
+},{"../vorbis/VorbisParser":81,"./Opus":73,"token-types":119}],75:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Header = void 0;
@@ -64955,7 +64955,7 @@ exports.Header = {
     }
 };
 
-},{"../../common/Util":37,"token-types":118}],76:[function(require,module,exports){
+},{"../../common/Util":37,"token-types":119}],76:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SpeexParser = void 0;
@@ -65017,7 +65017,7 @@ exports.IdentificationHeader = {
     }
 };
 
-},{"token-types":118}],78:[function(require,module,exports){
+},{"token-types":119}],78:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TheoraParser = void 0;
@@ -65145,7 +65145,7 @@ exports.IdentificationHeader = {
 };
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../../id3v2/ID3v2Token":51,"buffer":4,"token-types":118}],80:[function(require,module,exports){
+},{"../../id3v2/ID3v2Token":51,"buffer":4,"token-types":119}],80:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -65181,7 +65181,7 @@ class VorbisDecoder {
 exports.VorbisDecoder = VorbisDecoder;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":4,"token-types":118}],81:[function(require,module,exports){
+},{"buffer":4,"token-types":119}],81:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -65313,7 +65313,7 @@ class VorbisParser {
 exports.VorbisParser = VorbisParser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./Vorbis":79,"./VorbisDecoder":80,"buffer":4,"debug":6,"token-types":118}],82:[function(require,module,exports){
+},{"./Vorbis":79,"./VorbisDecoder":80,"buffer":4,"debug":6,"token-types":119}],82:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VorbisTagMapper = void 0;
@@ -65481,7 +65481,7 @@ class ListInfoTagValue {
 }
 exports.ListInfoTagValue = ListInfoTagValue;
 
-},{"token-types":118}],84:[function(require,module,exports){
+},{"token-types":119}],84:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RiffInfoTagMapper = exports.riffInfoTagMap = void 0;
@@ -65559,7 +65559,7 @@ exports.BroadcastAudioExtensionChunk = {
     }
 };
 
-},{"../common/Util":37,"token-types":118}],87:[function(require,module,exports){
+},{"../common/Util":37,"token-types":119}],87:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FactChunk = exports.Format = exports.WaveFormat = void 0;
@@ -65791,7 +65791,7 @@ class WaveParser extends BasicParser_1.BasicParser {
 }
 exports.WaveParser = WaveParser;
 
-},{"../common/BasicParser":29,"../common/FourCC":32,"../common/Util":37,"../id3v2/ID3v2Parser":50,"../riff/RiffChunk":83,"../wav/BwfChunk":86,"./../wav/WaveChunk":87,"debug":6,"strtok3/lib/core":117,"token-types":118}],89:[function(require,module,exports){
+},{"../common/BasicParser":29,"../common/FourCC":32,"../common/Util":37,"../id3v2/ID3v2Parser":50,"../riff/RiffChunk":83,"../wav/BwfChunk":86,"./../wav/WaveChunk":87,"debug":6,"strtok3/lib/core":118,"token-types":119}],89:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -65894,7 +65894,7 @@ class WavPackParser extends BasicParser_1.BasicParser {
 exports.WavPackParser = WavPackParser;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../apev2/APEv2Parser":21,"../common/BasicParser":29,"../common/FourCC":32,"./WavPackToken":90,"buffer":4,"debug":6,"token-types":118}],90:[function(require,module,exports){
+},{"../apev2/APEv2Parser":21,"../common/BasicParser":29,"../common/FourCC":32,"./WavPackToken":90,"buffer":4,"debug":6,"token-types":119}],90:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WavPack = void 0;
@@ -65972,7 +65972,7 @@ WavPack.MetadataIdToken = {
 };
 exports.WavPack = WavPack;
 
-},{"../common/FourCC":32,"token-types":118}],91:[function(require,module,exports){
+},{"../common/FourCC":32,"token-types":119}],91:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Deferred = void 0;
@@ -67730,7 +67730,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../errors":97,"./_stream_duplex":98,"./internal/streams/async_iterator":103,"./internal/streams/buffer_list":104,"./internal/streams/destroy":105,"./internal/streams/from":107,"./internal/streams/state":109,"./internal/streams/stream":110,"_process":95,"buffer":4,"events":8,"inherits":13,"string_decoder/":113,"util":3}],101:[function(require,module,exports){
+},{"../errors":97,"./_stream_duplex":98,"./internal/streams/async_iterator":103,"./internal/streams/buffer_list":104,"./internal/streams/destroy":105,"./internal/streams/from":107,"./internal/streams/state":109,"./internal/streams/stream":110,"_process":95,"buffer":4,"events":8,"inherits":13,"string_decoder/":114,"util":3}],101:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -68565,7 +68565,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../errors":97,"./_stream_duplex":98,"./internal/streams/destroy":105,"./internal/streams/state":109,"./internal/streams/stream":110,"_process":95,"buffer":4,"inherits":13,"util-deprecate":119}],103:[function(require,module,exports){
+},{"../errors":97,"./_stream_duplex":98,"./internal/streams/destroy":105,"./internal/streams/state":109,"./internal/streams/stream":110,"_process":95,"buffer":4,"inherits":13,"util-deprecate":120}],103:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -69315,6 +69315,791 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 }
 
 },{"buffer":4}],113:[function(require,module,exports){
+/*! Split.js - v1.6.5 */
+
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Split = factory());
+}(this, (function () { 'use strict';
+
+    // The programming goals of Split.js are to deliver readable, understandable and
+    // maintainable code, while at the same time manually optimizing for tiny minified file size,
+    // browser compatibility without additional requirements
+    // and very few assumptions about the user's page layout.
+    var global = typeof window !== 'undefined' ? window : null;
+    var ssr = global === null;
+    var document = !ssr ? global.document : undefined;
+
+    // Save a couple long function names that are used frequently.
+    // This optimization saves around 400 bytes.
+    var addEventListener = 'addEventListener';
+    var removeEventListener = 'removeEventListener';
+    var getBoundingClientRect = 'getBoundingClientRect';
+    var gutterStartDragging = '_a';
+    var aGutterSize = '_b';
+    var bGutterSize = '_c';
+    var HORIZONTAL = 'horizontal';
+    var NOOP = function () { return false; };
+
+    // Helper function determines which prefixes of CSS calc we need.
+    // We only need to do this once on startup, when this anonymous function is called.
+    //
+    // Tests -webkit, -moz and -o prefixes. Modified from StackOverflow:
+    // http://stackoverflow.com/questions/16625140/js-feature-detection-to-detect-the-usage-of-webkit-calc-over-calc/16625167#16625167
+    var calc = ssr
+        ? 'calc'
+        : ((['', '-webkit-', '-moz-', '-o-']
+              .filter(function (prefix) {
+                  var el = document.createElement('div');
+                  el.style.cssText = "width:" + prefix + "calc(9px)";
+
+                  return !!el.style.length
+              })
+              .shift()) + "calc");
+
+    // Helper function checks if its argument is a string-like type
+    var isString = function (v) { return typeof v === 'string' || v instanceof String; };
+
+    // Helper function allows elements and string selectors to be used
+    // interchangeably. In either case an element is returned. This allows us to
+    // do `Split([elem1, elem2])` as well as `Split(['#id1', '#id2'])`.
+    var elementOrSelector = function (el) {
+        if (isString(el)) {
+            var ele = document.querySelector(el);
+            if (!ele) {
+                throw new Error(("Selector " + el + " did not match a DOM element"))
+            }
+            return ele
+        }
+
+        return el
+    };
+
+    // Helper function gets a property from the properties object, with a default fallback
+    var getOption = function (options, propName, def) {
+        var value = options[propName];
+        if (value !== undefined) {
+            return value
+        }
+        return def
+    };
+
+    var getGutterSize = function (gutterSize, isFirst, isLast, gutterAlign) {
+        if (isFirst) {
+            if (gutterAlign === 'end') {
+                return 0
+            }
+            if (gutterAlign === 'center') {
+                return gutterSize / 2
+            }
+        } else if (isLast) {
+            if (gutterAlign === 'start') {
+                return 0
+            }
+            if (gutterAlign === 'center') {
+                return gutterSize / 2
+            }
+        }
+
+        return gutterSize
+    };
+
+    // Default options
+    var defaultGutterFn = function (i, gutterDirection) {
+        var gut = document.createElement('div');
+        gut.className = "gutter gutter-" + gutterDirection;
+        return gut
+    };
+
+    var defaultElementStyleFn = function (dim, size, gutSize) {
+        var style = {};
+
+        if (!isString(size)) {
+            style[dim] = calc + "(" + size + "% - " + gutSize + "px)";
+        } else {
+            style[dim] = size;
+        }
+
+        return style
+    };
+
+    var defaultGutterStyleFn = function (dim, gutSize) {
+        var obj;
+
+        return (( obj = {}, obj[dim] = (gutSize + "px"), obj ));
+    };
+
+    // The main function to initialize a split. Split.js thinks about each pair
+    // of elements as an independant pair. Dragging the gutter between two elements
+    // only changes the dimensions of elements in that pair. This is key to understanding
+    // how the following functions operate, since each function is bound to a pair.
+    //
+    // A pair object is shaped like this:
+    //
+    // {
+    //     a: DOM element,
+    //     b: DOM element,
+    //     aMin: Number,
+    //     bMin: Number,
+    //     dragging: Boolean,
+    //     parent: DOM element,
+    //     direction: 'horizontal' | 'vertical'
+    // }
+    //
+    // The basic sequence:
+    //
+    // 1. Set defaults to something sane. `options` doesn't have to be passed at all.
+    // 2. Initialize a bunch of strings based on the direction we're splitting.
+    //    A lot of the behavior in the rest of the library is paramatized down to
+    //    rely on CSS strings and classes.
+    // 3. Define the dragging helper functions, and a few helpers to go with them.
+    // 4. Loop through the elements while pairing them off. Every pair gets an
+    //    `pair` object and a gutter.
+    // 5. Actually size the pair elements, insert gutters and attach event listeners.
+    var Split = function (idsOption, options) {
+        if ( options === void 0 ) options = {};
+
+        if (ssr) { return {} }
+
+        var ids = idsOption;
+        var dimension;
+        var clientAxis;
+        var position;
+        var positionEnd;
+        var clientSize;
+        var elements;
+
+        // Allow HTMLCollection to be used as an argument when supported
+        if (Array.from) {
+            ids = Array.from(ids);
+        }
+
+        // All DOM elements in the split should have a common parent. We can grab
+        // the first elements parent and hope users read the docs because the
+        // behavior will be whacky otherwise.
+        var firstElement = elementOrSelector(ids[0]);
+        var parent = firstElement.parentNode;
+        var parentStyle = getComputedStyle ? getComputedStyle(parent) : null;
+        var parentFlexDirection = parentStyle ? parentStyle.flexDirection : null;
+
+        // Set default options.sizes to equal percentages of the parent element.
+        var sizes = getOption(options, 'sizes') || ids.map(function () { return 100 / ids.length; });
+
+        // Standardize minSize and maxSize to an array if it isn't already.
+        // This allows minSize and maxSize to be passed as a number.
+        var minSize = getOption(options, 'minSize', 100);
+        var minSizes = Array.isArray(minSize) ? minSize : ids.map(function () { return minSize; });
+        var maxSize = getOption(options, 'maxSize', Infinity);
+        var maxSizes = Array.isArray(maxSize) ? maxSize : ids.map(function () { return maxSize; });
+
+        // Get other options
+        var expandToMin = getOption(options, 'expandToMin', false);
+        var gutterSize = getOption(options, 'gutterSize', 10);
+        var gutterAlign = getOption(options, 'gutterAlign', 'center');
+        var snapOffset = getOption(options, 'snapOffset', 30);
+        var snapOffsets = Array.isArray(snapOffset) ? snapOffset : ids.map(function () { return snapOffset; });
+        var dragInterval = getOption(options, 'dragInterval', 1);
+        var direction = getOption(options, 'direction', HORIZONTAL);
+        var cursor = getOption(
+            options,
+            'cursor',
+            direction === HORIZONTAL ? 'col-resize' : 'row-resize'
+        );
+        var gutter = getOption(options, 'gutter', defaultGutterFn);
+        var elementStyle = getOption(
+            options,
+            'elementStyle',
+            defaultElementStyleFn
+        );
+        var gutterStyle = getOption(options, 'gutterStyle', defaultGutterStyleFn);
+
+        // 2. Initialize a bunch of strings based on the direction we're splitting.
+        // A lot of the behavior in the rest of the library is paramatized down to
+        // rely on CSS strings and classes.
+        if (direction === HORIZONTAL) {
+            dimension = 'width';
+            clientAxis = 'clientX';
+            position = 'left';
+            positionEnd = 'right';
+            clientSize = 'clientWidth';
+        } else if (direction === 'vertical') {
+            dimension = 'height';
+            clientAxis = 'clientY';
+            position = 'top';
+            positionEnd = 'bottom';
+            clientSize = 'clientHeight';
+        }
+
+        // 3. Define the dragging helper functions, and a few helpers to go with them.
+        // Each helper is bound to a pair object that contains its metadata. This
+        // also makes it easy to store references to listeners that that will be
+        // added and removed.
+        //
+        // Even though there are no other functions contained in them, aliasing
+        // this to self saves 50 bytes or so since it's used so frequently.
+        //
+        // The pair object saves metadata like dragging state, position and
+        // event listener references.
+
+        function setElementSize(el, size, gutSize, i) {
+            // Split.js allows setting sizes via numbers (ideally), or if you must,
+            // by string, like '300px'. This is less than ideal, because it breaks
+            // the fluid layout that `calc(% - px)` provides. You're on your own if you do that,
+            // make sure you calculate the gutter size by hand.
+            var style = elementStyle(dimension, size, gutSize, i);
+
+            Object.keys(style).forEach(function (prop) {
+                // eslint-disable-next-line no-param-reassign
+                el.style[prop] = style[prop];
+            });
+        }
+
+        function setGutterSize(gutterElement, gutSize, i) {
+            var style = gutterStyle(dimension, gutSize, i);
+
+            Object.keys(style).forEach(function (prop) {
+                // eslint-disable-next-line no-param-reassign
+                gutterElement.style[prop] = style[prop];
+            });
+        }
+
+        function getSizes() {
+            return elements.map(function (element) { return element.size; })
+        }
+
+        // Supports touch events, but not multitouch, so only the first
+        // finger `touches[0]` is counted.
+        function getMousePosition(e) {
+            if ('touches' in e) { return e.touches[0][clientAxis] }
+            return e[clientAxis]
+        }
+
+        // Actually adjust the size of elements `a` and `b` to `offset` while dragging.
+        // calc is used to allow calc(percentage + gutterpx) on the whole split instance,
+        // which allows the viewport to be resized without additional logic.
+        // Element a's size is the same as offset. b's size is total size - a size.
+        // Both sizes are calculated from the initial parent percentage,
+        // then the gutter size is subtracted.
+        function adjust(offset) {
+            var a = elements[this.a];
+            var b = elements[this.b];
+            var percentage = a.size + b.size;
+
+            a.size = (offset / this.size) * percentage;
+            b.size = percentage - (offset / this.size) * percentage;
+
+            setElementSize(a.element, a.size, this[aGutterSize], a.i);
+            setElementSize(b.element, b.size, this[bGutterSize], b.i);
+        }
+
+        // drag, where all the magic happens. The logic is really quite simple:
+        //
+        // 1. Ignore if the pair is not dragging.
+        // 2. Get the offset of the event.
+        // 3. Snap offset to min if within snappable range (within min + snapOffset).
+        // 4. Actually adjust each element in the pair to offset.
+        //
+        // ---------------------------------------------------------------------
+        // |    | <- a.minSize               ||              b.minSize -> |    |
+        // |    |  | <- this.snapOffset      ||     this.snapOffset -> |  |    |
+        // |    |  |                         ||                        |  |    |
+        // |    |  |                         ||                        |  |    |
+        // ---------------------------------------------------------------------
+        // | <- this.start                                        this.size -> |
+        function drag(e) {
+            var offset;
+            var a = elements[this.a];
+            var b = elements[this.b];
+
+            if (!this.dragging) { return }
+
+            // Get the offset of the event from the first side of the
+            // pair `this.start`. Then offset by the initial position of the
+            // mouse compared to the gutter size.
+            offset =
+                getMousePosition(e) -
+                this.start +
+                (this[aGutterSize] - this.dragOffset);
+
+            if (dragInterval > 1) {
+                offset = Math.round(offset / dragInterval) * dragInterval;
+            }
+
+            // If within snapOffset of min or max, set offset to min or max.
+            // snapOffset buffers a.minSize and b.minSize, so logic is opposite for both.
+            // Include the appropriate gutter sizes to prevent overflows.
+            if (offset <= a.minSize + a.snapOffset + this[aGutterSize]) {
+                offset = a.minSize + this[aGutterSize];
+            } else if (
+                offset >=
+                this.size - (b.minSize + b.snapOffset + this[bGutterSize])
+            ) {
+                offset = this.size - (b.minSize + this[bGutterSize]);
+            }
+
+            if (offset >= a.maxSize - a.snapOffset + this[aGutterSize]) {
+                offset = a.maxSize + this[aGutterSize];
+            } else if (
+                offset <=
+                this.size - (b.maxSize - b.snapOffset + this[bGutterSize])
+            ) {
+                offset = this.size - (b.maxSize + this[bGutterSize]);
+            }
+
+            // Actually adjust the size.
+            adjust.call(this, offset);
+
+            // Call the drag callback continously. Don't do anything too intensive
+            // in this callback.
+            getOption(options, 'onDrag', NOOP)(getSizes());
+        }
+
+        // Cache some important sizes when drag starts, so we don't have to do that
+        // continously:
+        //
+        // `size`: The total size of the pair. First + second + first gutter + second gutter.
+        // `start`: The leading side of the first element.
+        //
+        // ------------------------------------------------
+        // |      aGutterSize -> |||                      |
+        // |                     |||                      |
+        // |                     |||                      |
+        // |                     ||| <- bGutterSize       |
+        // ------------------------------------------------
+        // | <- start                             size -> |
+        function calculateSizes() {
+            // Figure out the parent size minus padding.
+            var a = elements[this.a].element;
+            var b = elements[this.b].element;
+
+            var aBounds = a[getBoundingClientRect]();
+            var bBounds = b[getBoundingClientRect]();
+
+            this.size =
+                aBounds[dimension] +
+                bBounds[dimension] +
+                this[aGutterSize] +
+                this[bGutterSize];
+            this.start = aBounds[position];
+            this.end = aBounds[positionEnd];
+        }
+
+        function innerSize(element) {
+            // Return nothing if getComputedStyle is not supported (< IE9)
+            // Or if parent element has no layout yet
+            if (!getComputedStyle) { return null }
+
+            var computedStyle = getComputedStyle(element);
+
+            if (!computedStyle) { return null }
+
+            var size = element[clientSize];
+
+            if (size === 0) { return null }
+
+            if (direction === HORIZONTAL) {
+                size -=
+                    parseFloat(computedStyle.paddingLeft) +
+                    parseFloat(computedStyle.paddingRight);
+            } else {
+                size -=
+                    parseFloat(computedStyle.paddingTop) +
+                    parseFloat(computedStyle.paddingBottom);
+            }
+
+            return size
+        }
+
+        // When specifying percentage sizes that are less than the computed
+        // size of the element minus the gutter, the lesser percentages must be increased
+        // (and decreased from the other elements) to make space for the pixels
+        // subtracted by the gutters.
+        function trimToMin(sizesToTrim) {
+            // Try to get inner size of parent element.
+            // If it's no supported, return original sizes.
+            var parentSize = innerSize(parent);
+            if (parentSize === null) {
+                return sizesToTrim
+            }
+
+            if (minSizes.reduce(function (a, b) { return a + b; }, 0) > parentSize) {
+                return sizesToTrim
+            }
+
+            // Keep track of the excess pixels, the amount of pixels over the desired percentage
+            // Also keep track of the elements with pixels to spare, to decrease after if needed
+            var excessPixels = 0;
+            var toSpare = [];
+
+            var pixelSizes = sizesToTrim.map(function (size, i) {
+                // Convert requested percentages to pixel sizes
+                var pixelSize = (parentSize * size) / 100;
+                var elementGutterSize = getGutterSize(
+                    gutterSize,
+                    i === 0,
+                    i === sizesToTrim.length - 1,
+                    gutterAlign
+                );
+                var elementMinSize = minSizes[i] + elementGutterSize;
+
+                // If element is too smal, increase excess pixels by the difference
+                // and mark that it has no pixels to spare
+                if (pixelSize < elementMinSize) {
+                    excessPixels += elementMinSize - pixelSize;
+                    toSpare.push(0);
+                    return elementMinSize
+                }
+
+                // Otherwise, mark the pixels it has to spare and return it's original size
+                toSpare.push(pixelSize - elementMinSize);
+                return pixelSize
+            });
+
+            // If nothing was adjusted, return the original sizes
+            if (excessPixels === 0) {
+                return sizesToTrim
+            }
+
+            return pixelSizes.map(function (pixelSize, i) {
+                var newPixelSize = pixelSize;
+
+                // While there's still pixels to take, and there's enough pixels to spare,
+                // take as many as possible up to the total excess pixels
+                if (excessPixels > 0 && toSpare[i] - excessPixels > 0) {
+                    var takenPixels = Math.min(
+                        excessPixels,
+                        toSpare[i] - excessPixels
+                    );
+
+                    // Subtract the amount taken for the next iteration
+                    excessPixels -= takenPixels;
+                    newPixelSize = pixelSize - takenPixels;
+                }
+
+                // Return the pixel size adjusted as a percentage
+                return (newPixelSize / parentSize) * 100
+            })
+        }
+
+        // stopDragging is very similar to startDragging in reverse.
+        function stopDragging() {
+            var self = this;
+            var a = elements[self.a].element;
+            var b = elements[self.b].element;
+
+            if (self.dragging) {
+                getOption(options, 'onDragEnd', NOOP)(getSizes());
+            }
+
+            self.dragging = false;
+
+            // Remove the stored event listeners. This is why we store them.
+            global[removeEventListener]('mouseup', self.stop);
+            global[removeEventListener]('touchend', self.stop);
+            global[removeEventListener]('touchcancel', self.stop);
+            global[removeEventListener]('mousemove', self.move);
+            global[removeEventListener]('touchmove', self.move);
+
+            // Clear bound function references
+            self.stop = null;
+            self.move = null;
+
+            a[removeEventListener]('selectstart', NOOP);
+            a[removeEventListener]('dragstart', NOOP);
+            b[removeEventListener]('selectstart', NOOP);
+            b[removeEventListener]('dragstart', NOOP);
+
+            a.style.userSelect = '';
+            a.style.webkitUserSelect = '';
+            a.style.MozUserSelect = '';
+            a.style.pointerEvents = '';
+
+            b.style.userSelect = '';
+            b.style.webkitUserSelect = '';
+            b.style.MozUserSelect = '';
+            b.style.pointerEvents = '';
+
+            self.gutter.style.cursor = '';
+            self.parent.style.cursor = '';
+            document.body.style.cursor = '';
+        }
+
+        // startDragging calls `calculateSizes` to store the inital size in the pair object.
+        // It also adds event listeners for mouse/touch events,
+        // and prevents selection while dragging so avoid the selecting text.
+        function startDragging(e) {
+            // Right-clicking can't start dragging.
+            if ('button' in e && e.button !== 0) {
+                return
+            }
+
+            // Alias frequently used variables to save space. 200 bytes.
+            var self = this;
+            var a = elements[self.a].element;
+            var b = elements[self.b].element;
+
+            // Call the onDragStart callback.
+            if (!self.dragging) {
+                getOption(options, 'onDragStart', NOOP)(getSizes());
+            }
+
+            // Don't actually drag the element. We emulate that in the drag function.
+            e.preventDefault();
+
+            // Set the dragging property of the pair object.
+            self.dragging = true;
+
+            // Create two event listeners bound to the same pair object and store
+            // them in the pair object.
+            self.move = drag.bind(self);
+            self.stop = stopDragging.bind(self);
+
+            // All the binding. `window` gets the stop events in case we drag out of the elements.
+            global[addEventListener]('mouseup', self.stop);
+            global[addEventListener]('touchend', self.stop);
+            global[addEventListener]('touchcancel', self.stop);
+            global[addEventListener]('mousemove', self.move);
+            global[addEventListener]('touchmove', self.move);
+
+            // Disable selection. Disable!
+            a[addEventListener]('selectstart', NOOP);
+            a[addEventListener]('dragstart', NOOP);
+            b[addEventListener]('selectstart', NOOP);
+            b[addEventListener]('dragstart', NOOP);
+
+            a.style.userSelect = 'none';
+            a.style.webkitUserSelect = 'none';
+            a.style.MozUserSelect = 'none';
+            a.style.pointerEvents = 'none';
+
+            b.style.userSelect = 'none';
+            b.style.webkitUserSelect = 'none';
+            b.style.MozUserSelect = 'none';
+            b.style.pointerEvents = 'none';
+
+            // Set the cursor at multiple levels
+            self.gutter.style.cursor = cursor;
+            self.parent.style.cursor = cursor;
+            document.body.style.cursor = cursor;
+
+            // Cache the initial sizes of the pair.
+            calculateSizes.call(self);
+
+            // Determine the position of the mouse compared to the gutter
+            self.dragOffset = getMousePosition(e) - self.end;
+        }
+
+        // adjust sizes to ensure percentage is within min size and gutter.
+        sizes = trimToMin(sizes);
+
+        // 5. Create pair and element objects. Each pair has an index reference to
+        // elements `a` and `b` of the pair (first and second elements).
+        // Loop through the elements while pairing them off. Every pair gets a
+        // `pair` object and a gutter.
+        //
+        // Basic logic:
+        //
+        // - Starting with the second element `i > 0`, create `pair` objects with
+        //   `a = i - 1` and `b = i`
+        // - Set gutter sizes based on the _pair_ being first/last. The first and last
+        //   pair have gutterSize / 2, since they only have one half gutter, and not two.
+        // - Create gutter elements and add event listeners.
+        // - Set the size of the elements, minus the gutter sizes.
+        //
+        // -----------------------------------------------------------------------
+        // |     i=0     |         i=1         |        i=2       |      i=3     |
+        // |             |                     |                  |              |
+        // |           pair 0                pair 1             pair 2           |
+        // |             |                     |                  |              |
+        // -----------------------------------------------------------------------
+        var pairs = [];
+        elements = ids.map(function (id, i) {
+            // Create the element object.
+            var element = {
+                element: elementOrSelector(id),
+                size: sizes[i],
+                minSize: minSizes[i],
+                maxSize: maxSizes[i],
+                snapOffset: snapOffsets[i],
+                i: i,
+            };
+
+            var pair;
+
+            if (i > 0) {
+                // Create the pair object with its metadata.
+                pair = {
+                    a: i - 1,
+                    b: i,
+                    dragging: false,
+                    direction: direction,
+                    parent: parent,
+                };
+
+                pair[aGutterSize] = getGutterSize(
+                    gutterSize,
+                    i - 1 === 0,
+                    false,
+                    gutterAlign
+                );
+                pair[bGutterSize] = getGutterSize(
+                    gutterSize,
+                    false,
+                    i === ids.length - 1,
+                    gutterAlign
+                );
+
+                // if the parent has a reverse flex-direction, switch the pair elements.
+                if (
+                    parentFlexDirection === 'row-reverse' ||
+                    parentFlexDirection === 'column-reverse'
+                ) {
+                    var temp = pair.a;
+                    pair.a = pair.b;
+                    pair.b = temp;
+                }
+            }
+
+            // Determine the size of the current element. IE8 is supported by
+            // staticly assigning sizes without draggable gutters. Assigns a string
+            // to `size`.
+            //
+            // Create gutter elements for each pair.
+            if (i > 0) {
+                var gutterElement = gutter(i, direction, element.element);
+                setGutterSize(gutterElement, gutterSize, i);
+
+                // Save bound event listener for removal later
+                pair[gutterStartDragging] = startDragging.bind(pair);
+
+                // Attach bound event listener
+                gutterElement[addEventListener](
+                    'mousedown',
+                    pair[gutterStartDragging]
+                );
+                gutterElement[addEventListener](
+                    'touchstart',
+                    pair[gutterStartDragging]
+                );
+
+                parent.insertBefore(gutterElement, element.element);
+
+                pair.gutter = gutterElement;
+            }
+
+            setElementSize(
+                element.element,
+                element.size,
+                getGutterSize(
+                    gutterSize,
+                    i === 0,
+                    i === ids.length - 1,
+                    gutterAlign
+                ),
+                i
+            );
+
+            // After the first iteration, and we have a pair object, append it to the
+            // list of pairs.
+            if (i > 0) {
+                pairs.push(pair);
+            }
+
+            return element
+        });
+
+        function adjustToMin(element) {
+            var isLast = element.i === pairs.length;
+            var pair = isLast ? pairs[element.i - 1] : pairs[element.i];
+
+            calculateSizes.call(pair);
+
+            var size = isLast
+                ? pair.size - element.minSize - pair[bGutterSize]
+                : element.minSize + pair[aGutterSize];
+
+            adjust.call(pair, size);
+        }
+
+        elements.forEach(function (element) {
+            var computedSize = element.element[getBoundingClientRect]()[dimension];
+
+            if (computedSize < element.minSize) {
+                if (expandToMin) {
+                    adjustToMin(element);
+                } else {
+                    // eslint-disable-next-line no-param-reassign
+                    element.minSize = computedSize;
+                }
+            }
+        });
+
+        function setSizes(newSizes) {
+            var trimmed = trimToMin(newSizes);
+            trimmed.forEach(function (newSize, i) {
+                if (i > 0) {
+                    var pair = pairs[i - 1];
+
+                    var a = elements[pair.a];
+                    var b = elements[pair.b];
+
+                    a.size = trimmed[i - 1];
+                    b.size = newSize;
+
+                    setElementSize(a.element, a.size, pair[aGutterSize], a.i);
+                    setElementSize(b.element, b.size, pair[bGutterSize], b.i);
+                }
+            });
+        }
+
+        function destroy(preserveStyles, preserveGutter) {
+            pairs.forEach(function (pair) {
+                if (preserveGutter !== true) {
+                    pair.parent.removeChild(pair.gutter);
+                } else {
+                    pair.gutter[removeEventListener](
+                        'mousedown',
+                        pair[gutterStartDragging]
+                    );
+                    pair.gutter[removeEventListener](
+                        'touchstart',
+                        pair[gutterStartDragging]
+                    );
+                }
+
+                if (preserveStyles !== true) {
+                    var style = elementStyle(
+                        dimension,
+                        pair.a.size,
+                        pair[aGutterSize]
+                    );
+
+                    Object.keys(style).forEach(function (prop) {
+                        elements[pair.a].element.style[prop] = '';
+                        elements[pair.b].element.style[prop] = '';
+                    });
+                }
+            });
+        }
+
+        return {
+            setSizes: setSizes,
+            getSizes: getSizes,
+            collapse: function collapse(i) {
+                adjustToMin(elements[i]);
+            },
+            destroy: destroy,
+            parent: parent,
+            pairs: pairs,
+        }
+    };
+
+    return Split;
+
+})));
+
+},{}],114:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -69611,7 +70396,7 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":112}],114:[function(require,module,exports){
+},{"safe-buffer":112}],115:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -69719,7 +70504,7 @@ class AbstractTokenizer {
 exports.AbstractTokenizer = AbstractTokenizer;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":4,"peek-readable":94}],115:[function(require,module,exports){
+},{"buffer":4,"peek-readable":94}],116:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BufferTokenizer = void 0;
@@ -69776,7 +70561,7 @@ class BufferTokenizer extends AbstractTokenizer_1.AbstractTokenizer {
 }
 exports.BufferTokenizer = BufferTokenizer;
 
-},{"./AbstractTokenizer":114,"peek-readable":94}],116:[function(require,module,exports){
+},{"./AbstractTokenizer":115,"peek-readable":94}],117:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReadStreamTokenizer = void 0;
@@ -69876,7 +70661,7 @@ class ReadStreamTokenizer extends AbstractTokenizer_1.AbstractTokenizer {
 }
 exports.ReadStreamTokenizer = ReadStreamTokenizer;
 
-},{"./AbstractTokenizer":114,"peek-readable":94}],117:[function(require,module,exports){
+},{"./AbstractTokenizer":115,"peek-readable":94}],118:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fromBuffer = exports.fromStream = exports.EndOfStreamError = void 0;
@@ -69907,7 +70692,7 @@ function fromBuffer(uint8Array, fileInfo) {
 }
 exports.fromBuffer = fromBuffer;
 
-},{"./BufferTokenizer":115,"./ReadStreamTokenizer":116,"peek-readable":94}],118:[function(require,module,exports){
+},{"./BufferTokenizer":116,"./ReadStreamTokenizer":117,"peek-readable":94}],119:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -70366,7 +71151,7 @@ AnsiStringType.windows1252 = [8364, 129, 8218, 402, 8222, 8230, 8224, 8225, 710,
     248, 249, 250, 251, 252, 253, 254, 255];
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":4,"ieee754":12}],119:[function(require,module,exports){
+},{"buffer":4,"ieee754":12}],120:[function(require,module,exports){
 (function (global){(function (){
 
 /**
@@ -70437,10 +71222,11 @@ function config (name) {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 document.addEventListener("DOMContentLoaded", (event) => {
   const musicMetadata = require("music-metadata-browser");
   const { Grid } = require("ag-grid-community");
+  const Split = require("split.js");
 
   let totalAudioFiles = 0;
   let currentTrackIndex = null;
@@ -70448,8 +71234,36 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let audio;
   let libraryDirectory;
   let db;
+  let sidebarWidth;
 
-  // Initialise the metadata database
+  const splitInstance = Split(['#split-0', '#split-1'], {
+    minSize: 0,
+    snapOffset: 40,
+    sizes: [12, 88],
+    onDragEnd: () => {
+      sidebarWidth = document.querySelector('#split-0').offsetWidth;
+      console.log(sidebarWidth);
+    },
+  });
+  sidebarWidth = document.querySelector('#split-0').offsetWidth;
+
+  const ro = new ResizeObserver(entries => {
+    for (let entry of entries) {
+      const newLeftPaneSize = sidebarWidth / entry.contentRect.width * 100;
+      const newRightPaneSize = 100 - newLeftPaneSize;
+      splitInstance.setSizes([newLeftPaneSize, newRightPaneSize]);
+    }
+  });
+  ro.observe(document.body);
+
+  const gutter = document.querySelector('.gutter.gutter-horizontal');
+  gutter.addEventListener('mousedown', () => {
+    if (sidebarWidth === 0) {
+      splitInstance.setSizes([12, 88]);
+    }
+  });
+
+  // Database
   let openRequest = indexedDB.open("audioMetadataDB", 1);
   openRequest.onupgradeneeded = function (event) {
     db = event.target.result;
@@ -70466,6 +71280,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   const gridOptions = {
     enableColResize: true,
+    suppressCellSelection: true,
+    suppressDragLeaveHidesColumns: true,
     rowSelection: "multiple",
     // animateRows: true,
     getRowStyle: function (params) {
@@ -70503,32 +71319,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
   button3.addEventListener("click", pauseAudio);
   const button4 = document.getElementById("nextButton");
   button4.addEventListener("click", nextTrack);
-  let mouseDown = false;
+  let progressMouseDown = false;
+
+  function getOffsetLeft(elem) {
+    var offsetLeft = 0;
+    do {
+      if (!isNaN(elem.offsetLeft)) {
+        offsetLeft += elem.offsetLeft;
+      }
+    } while (elem = elem.offsetParent);
+    return offsetLeft;
+  }
 
   const progressBar = document.getElementById("progressBar");
+
   progressBar.addEventListener("mousedown", function (e) {
-    mouseDown = true;
+    progressMouseDown = true;
     const progressBarWidth = this.offsetWidth;
-    const clickPosition = e.pageX - this.offsetLeft;
+    const clickPosition = e.pageX - getOffsetLeft(this);
     const percentage = clickPosition / progressBarWidth;
     audio.currentTime = audio.duration * percentage;
   });
 
-  progressBar.addEventListener("mousemove", function (e) {
-    if (mouseDown) {
-      const progressBarWidth = this.offsetWidth;
-      const clickPosition = e.pageX - this.offsetLeft;
+  document.addEventListener("mousemove", function (e) {
+    if (progressMouseDown) {
+      const progressBarWidth = progressBar.offsetWidth;
+      const clickPosition = e.pageX - getOffsetLeft(progressBar);
       const percentage = clickPosition / progressBarWidth;
       audio.currentTime = audio.duration * percentage;
     }
   });
 
-  progressBar.addEventListener("mouseup", function (e) {
-    mouseDown = false;
-  });
-
-  progressBar.addEventListener("mouseleave", function (e) {
-    mouseDown = false;
+  document.addEventListener("mouseup", function (e) {
+    progressMouseDown = false;
   });
 
   document.getElementById("volumeSlider").oninput = function () {
@@ -70710,11 +71533,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("currentTrackTitle").textContent = track.title;
       document.getElementById("currentTrackArtist").textContent = track.artist;
       document.getElementById("currentTrackArt").src = track.coverArt;
+      document.getElementById("duration").textContent = track.length;
       currentTrackIndex = index;
       audio.addEventListener("timeupdate", function () {
         document.getElementById("elapsed").textContent = formatDuration(audio.currentTime);
-        // Should probably move this
-        document.getElementById("duration").textContent = formatDuration(audio.duration);
         const progressBar = document.getElementById("progressBar");
         const percentage = (audio.currentTime / audio.duration) * 100;
         progressBar.value = percentage;
@@ -70746,6 +71568,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
     }
   }
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: 'My Web Player',
+      artist: 'Myself',
+      album: 'My Album',
+      artwork: [
+        { src: 'album-art.png', sizes: '512x512', type: 'image/png' }
+      ]
+    });
+
+    navigator.mediaSession.setActionHandler('play', function () {
+      audio.play();
+      navigator.mediaSession.playbackState = 'playing';
+    });
+
+    navigator.mediaSession.setActionHandler('pause', function () {
+      audio.pause();
+      navigator.mediaSession.playbackState = 'paused';
+    });
+
+    navigator.mediaSession.setActionHandler('previoustrack', function () {
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', function () {
+    });
+  }
 });
 
-},{"ag-grid-community":1,"music-metadata-browser":16}]},{},[120]);
+},{"ag-grid-community":1,"music-metadata-browser":16,"split.js":113}]},{},[121]);

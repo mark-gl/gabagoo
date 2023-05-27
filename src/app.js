@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   const musicMetadata = require("music-metadata-browser");
   const { Grid } = require("ag-grid-community");
+  const Split = require("split.js");
 
   let totalAudioFiles = 0;
   let currentTrackIndex = null;
@@ -8,8 +9,36 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let audio;
   let libraryDirectory;
   let db;
+  let sidebarWidth;
 
-  // Initialise the metadata database
+  const splitInstance = Split(['#split-0', '#split-1'], {
+    minSize: 0,
+    snapOffset: 40,
+    sizes: [12, 88],
+    onDragEnd: () => {
+      sidebarWidth = document.querySelector('#split-0').offsetWidth;
+      console.log(sidebarWidth);
+    },
+  });
+  sidebarWidth = document.querySelector('#split-0').offsetWidth;
+
+  const ro = new ResizeObserver(entries => {
+    for (let entry of entries) {
+      const newLeftPaneSize = sidebarWidth / entry.contentRect.width * 100;
+      const newRightPaneSize = 100 - newLeftPaneSize;
+      splitInstance.setSizes([newLeftPaneSize, newRightPaneSize]);
+    }
+  });
+  ro.observe(document.body);
+
+  const gutter = document.querySelector('.gutter.gutter-horizontal');
+  gutter.addEventListener('mousedown', () => {
+    if (sidebarWidth === 0) {
+      splitInstance.setSizes([12, 88]);
+    }
+  });
+
+  // Database
   let openRequest = indexedDB.open("audioMetadataDB", 1);
   openRequest.onupgradeneeded = function (event) {
     db = event.target.result;
@@ -26,6 +55,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   const gridOptions = {
     enableColResize: true,
+    suppressCellSelection: true,
+    suppressDragLeaveHidesColumns: true,
     rowSelection: "multiple",
     // animateRows: true,
     getRowStyle: function (params) {
@@ -63,32 +94,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
   button3.addEventListener("click", pauseAudio);
   const button4 = document.getElementById("nextButton");
   button4.addEventListener("click", nextTrack);
-  let mouseDown = false;
+  let progressMouseDown = false;
+
+  function getOffsetLeft(elem) {
+    var offsetLeft = 0;
+    do {
+      if (!isNaN(elem.offsetLeft)) {
+        offsetLeft += elem.offsetLeft;
+      }
+    } while (elem = elem.offsetParent);
+    return offsetLeft;
+  }
 
   const progressBar = document.getElementById("progressBar");
+
   progressBar.addEventListener("mousedown", function (e) {
-    mouseDown = true;
+    progressMouseDown = true;
     const progressBarWidth = this.offsetWidth;
-    const clickPosition = e.pageX - this.offsetLeft;
+    const clickPosition = e.pageX - getOffsetLeft(this);
     const percentage = clickPosition / progressBarWidth;
     audio.currentTime = audio.duration * percentage;
   });
 
-  progressBar.addEventListener("mousemove", function (e) {
-    if (mouseDown) {
-      const progressBarWidth = this.offsetWidth;
-      const clickPosition = e.pageX - this.offsetLeft;
+  document.addEventListener("mousemove", function (e) {
+    if (progressMouseDown) {
+      const progressBarWidth = progressBar.offsetWidth;
+      const clickPosition = e.pageX - getOffsetLeft(progressBar);
       const percentage = clickPosition / progressBarWidth;
       audio.currentTime = audio.duration * percentage;
     }
   });
 
-  progressBar.addEventListener("mouseup", function (e) {
-    mouseDown = false;
-  });
-
-  progressBar.addEventListener("mouseleave", function (e) {
-    mouseDown = false;
+  document.addEventListener("mouseup", function (e) {
+    progressMouseDown = false;
   });
 
   document.getElementById("volumeSlider").oninput = function () {
@@ -270,11 +308,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("currentTrackTitle").textContent = track.title;
       document.getElementById("currentTrackArtist").textContent = track.artist;
       document.getElementById("currentTrackArt").src = track.coverArt;
+      document.getElementById("duration").textContent = track.length;
       currentTrackIndex = index;
       audio.addEventListener("timeupdate", function () {
         document.getElementById("elapsed").textContent = formatDuration(audio.currentTime);
-        // Should probably move this
-        document.getElementById("duration").textContent = formatDuration(audio.duration);
         const progressBar = document.getElementById("progressBar");
         const percentage = (audio.currentTime / audio.duration) * 100;
         progressBar.value = percentage;
@@ -305,5 +342,32 @@ document.addEventListener("DOMContentLoaded", (event) => {
       audio.play();
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
     }
+  }
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: 'My Web Player',
+      artist: 'Myself',
+      album: 'My Album',
+      artwork: [
+        { src: 'album-art.png', sizes: '512x512', type: 'image/png' }
+      ]
+    });
+
+    navigator.mediaSession.setActionHandler('play', function () {
+      audio.play();
+      navigator.mediaSession.playbackState = 'playing';
+    });
+
+    navigator.mediaSession.setActionHandler('pause', function () {
+      audio.pause();
+      navigator.mediaSession.playbackState = 'paused';
+    });
+
+    navigator.mediaSession.setActionHandler('previoustrack', function () {
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', function () {
+    });
   }
 });

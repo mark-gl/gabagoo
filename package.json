@@ -11,7 +11,8 @@
   "dependencies": {
     "ag-grid-community": "^29.3.5",
     "browserify": "^17.0.0",
-    "music-metadata-browser": "^2.5.10"
+    "music-metadata-browser": "^2.5.10",
+    "split.js": "^1.6.5"
   },
   "devDependencies": {
     "watchify": "^4.0.0"

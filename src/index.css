@@ -16,6 +16,23 @@ body {
   overflow: hidden;
 }
 
+.split {
+  display: flex;
+  flex-direction: row;
+}
+
+.gutter {
+  background-color: #eee;
+}
+
+.gutter.gutter-horizontal {
+  cursor: col-resize;
+}
+
+.ag-root-wrapper {
+  border: none !important;
+}
+
 .tracklist {
   width: 100%;
   height: calc(100vh - 75px);
@@ -54,6 +71,7 @@ body {
   align-items: center;
   height: 75px;
   flex: 0 0 auto;
+  border-top: 1px solid #bdc3c7
 }
 
 .player-left-controls {
@@ -94,7 +112,6 @@ body {
 .control-button {
   border: none;
   background: none;
-  cursor: pointer;
 }
 
 .control-button img {
