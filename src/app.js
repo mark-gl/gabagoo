@@ -92,25 +92,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 
 
-  document.getElementById('volumeSlider').oninput = function() {
+  document.getElementById('volumeSlider').oninput = function () {
     const maxVolumeLevel = 1;
     const minVolumeLevel = 0.01; // almost silent
     const position = this.value;
 
     // Special case for minimum position of slider
     if (position <= 0) {
-        audio.volume = 0;
+      audio.volume = 0;
     } else {
-        // Calculate volume on a log scale
-        const scale = Math.log(maxVolumeLevel / minVolumeLevel);
-        audio.volume = minVolumeLevel * Math.exp(scale * position);
+      // Calculate volume on a log scale
+      const scale = Math.log(maxVolumeLevel / minVolumeLevel);
+      audio.volume = minVolumeLevel * Math.exp(scale * position);
     }
-};
+  };
 
 
 
   async function getDirectory() {
     libraryDirectory = await window.showDirectoryPicker({ id: "libraryDirectory", startIn: "music" });
+    for await (const entry of libraryDirectory.values()) {
+      if (entry.kind === 'directory') {
+        // Can display these when re-prompting to indicate the chosen library folder
+        console.log(`Found subdirectory: ${entry.name}`);
+      }
+    }
   }
 
   function formatDuration(duration) {
@@ -119,17 +125,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
 
-  async function getAudioFileHandles(libraryDirectory) {
+  async function getAudioFileHandles(directoryHandle, relativePath = '') {
     let fileHandles = [];
-    for await (const entry of libraryDirectory.values()) {
+    for await (const entry of directoryHandle.values()) {
+      const entryRelativePath = `${relativePath}/${entry.name}`;
       if (entry.kind === "file") {
         const file = await entry.getFile();
         if (!file.type.startsWith("audio/")) {
           continue;
         }
+        file.relativePath = entryRelativePath;
         fileHandles.push(file);
       } else if (entry.kind === 'directory') {
-        const subDirFileHandles = await getAudioFileHandles(entry);
+        const subDirFileHandles = await getAudioFileHandles(entry, entryRelativePath);
         fileHandles = fileHandles.concat(subDirFileHandles);
       }
     }
@@ -155,7 +163,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       if (!metadata) {
         metadata = await musicMetadata.parseBlob(fileHandles[i]);
-        metadata.name = fileHandles[i].name;
+        metadata.name = fileHandles[i].relativePath;
         let tx = db.transaction('metadata', 'readwrite');
         let store = tx.objectStore('metadata');
         store.add(metadata);
@@ -163,18 +171,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       const url = URL.createObjectURL(fileHandles[i]);
 
-      const track = {
-        title: metadata.common.title,
-        artist: metadata.common.artists || (metadata.common.artist && [metadata.common.artist]) || (metadata.common.albumartist && [metadata.common.albumartist]),
-        'album artist': metadata.common.albumartist,
-        album: metadata.common.album,
-        length: formatDuration(metadata.format.duration),
-        genre: metadata.common.genre ? metadata.common.genre.join(", ") : null,
-        year: metadata.common.year,
-        url: url,
-        index: tracks.length,
-        // disk: common.disk,
-        // track: common.track.no,
+      let track;
+      if (metadata.native && metadata.native.iTunes) {
+        const iTunesData = new Map(metadata.native.iTunes.map(item => [item.id, item.value]));
+        track = {
+          title: iTunesData.get("\u00A9nam"),
+          artist: iTunesData.get("\u00A9ART"),
+          'album artist': iTunesData.get("aART"),
+          album: iTunesData.get("\u00A9alb"),
+          length: formatDuration(metadata.format.duration),
+          genre: iTunesData.get("gnre") || iTunesData.get("\u00A9gen"),
+          year: iTunesData.get("\u00A9day"),
+          url: url,
+          index: tracks.length,
+        }
+      } else {
+        track = {
+          title: metadata.common.title,
+          artist: metadata.common.artists || (metadata.common.artist && [metadata.common.artist]) || (metadata.common.albumartist && [metadata.common.albumartist]),
+          'album artist': metadata.common.albumartist,
+          album: metadata.common.album,
+          length: formatDuration(metadata.format.duration),
+          genre: metadata.common.genre ? metadata.common.genre.join(", ") : null,
+          year: metadata.common.year,
+          url: url,
+          index: tracks.length,
+          // disk: common.disk,
+          // track: common.track.no,
+        }
       }
 
       tracks.push(track)
@@ -187,11 +211,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('progressText').innerHTML = "Done!";
   }
 
-  async function getMetadata(fileHandle) {
+  async function getMetadata(file) {
     let metadata;
     let tx = db.transaction('metadata', 'readonly');
     let store = tx.objectStore('metadata');
-    let request = store.get(fileHandle.name);
+    let request = store.get(file.relativePath);
 
     await new Promise((resolve, reject) => {
       request.onsuccess = function () {
@@ -222,7 +246,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
       audio.play();
       document.getElementById('playPauseIcon').src = "assets/pause.svg";
       document.getElementById('currentTrackTitle').textContent = track.title;
-      document.getElementById('currentTrackArtist').textContent = track.artist.join(', ');
+      document.getElementById('currentTrackArtist').textContent = track.artist;
       currentTrackIndex = index;
       audio.addEventListener('timeupdate', function () {
         const progressBar = document.getElementById('progressBar');
