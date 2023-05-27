@@ -71284,16 +71284,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     suppressDragLeaveHidesColumns: true,
     rowSelection: "multiple",
     // animateRows: true,
-    getRowStyle: function (params) {
-      if (params.node.rowIndex === currentTrackIndex) {
-        return { fontWeight: "bold" };
-      } else {
-        return null;
-      }
-    },
     columnDefs: [
       { field: "title", resizable: true, sortable: true, flex: 2 },
-      { field: "length", resizable: true, sortable: true, flex: 0.5 },
+      { field: "length", resizable: true, sortable: true, filter: false, flex: 0.5 },
       { field: "artist", resizable: true, sortable: true, flex: 1 },
       { field: "album artist", resizable: true, sortable: true, flex: 1 },
       { field: "album", resizable: true, sortable: true, flex: 1 },
@@ -71306,6 +71299,25 @@ document.addEventListener("DOMContentLoaded", (event) => {
     },
     rowData: [],
   };
+
+  const searchInput = document.querySelector('#search-input');
+  const searchClear = document.querySelector('#search-clear');
+
+  searchInput.addEventListener('input', () => {
+    const filterValue = searchInput.value.toLowerCase();
+    gridOptions.api.setQuickFilter(filterValue);
+    if (searchInput.value.length > 0) {
+      searchClear.style.display = 'block';
+    } else {
+      searchClear.style.display = 'none';
+    }
+  });
+
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+    gridOptions.api.setQuickFilter('');
+  });
 
   const eGridDiv = document.querySelector("#myGrid");
 

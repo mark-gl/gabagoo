@@ -12,7 +12,14 @@
 
 <body>
   <div class="split">
-    <div id="split-0"></div>
+    <div id="split-0">
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Filter...">
+        <button id="search-clear" class="search-clear-button" style="display: none;">
+          <img src="assets/clear.svg" alt="Clear Search">
+        </button>
+      </div>
+    </div>
     <div id="split-1">
       <div id="myGrid" class="tracklist ag-theme-balham"></div>
     </div>
