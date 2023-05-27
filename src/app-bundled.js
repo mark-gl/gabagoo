@@ -71306,6 +71306,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
       const index = tracks.findIndex((track) => track.url === event.data.url);
       loadAudio(index);
     },
+    overlayLoadingTemplate: 'Loading...<span id="progressText"></span>',
+    overlayNoRowsTemplate: `Your library is empty, click 'Select Library Folder' to add some files.`,
     rowData: [],
   };
 
@@ -71457,11 +71459,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     let totalAudioFiles = 0;
-    document.getElementById("progressText").innerHTML = "Loading...";
 
     const fileHandles = await getAudioFileHandles(libraryDirectory);
     totalAudioFiles = fileHandles.length;
-
+    gridOptions.api.showLoadingOverlay();
+    let progress = document.getElementById("progressText")
+    if (progress != null) {
+      progress.innerHTML = " (0/" + totalAudioFiles + " files scanned)";
+    }
     const metadataPromises = fileHandles.map(getMetadata);
 
     for (let i = 0; i < fileHandles.length; i++) {
@@ -71526,11 +71531,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
       }
 
       tracks.push(track);
-      gridOptions.api.applyTransaction({ add: [track] });
-      document.getElementById("progressText").innerHTML =
-        "Loading... (" + (totalAudioFiles - i - 1) + " tracks left)";
+
+      let progress = document.getElementById("progressText")
+      if (progress != null) {
+        progress.innerHTML = " (" + (i - 1) + "/" + totalAudioFiles + " files scanned)";
+      }
     }
-    document.getElementById("progressText").innerHTML = "";
+    gridOptions.api.applyTransaction({ add: tracks });
   }
 
   async function getMetadata(file) {
