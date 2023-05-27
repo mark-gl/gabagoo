@@ -71279,8 +71279,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   };
 
   const gridOptions = {
-    enableColResize: true,
-    suppressCellSelection: true,
+    suppressCellFocus: true,
     suppressDragLeaveHidesColumns: true,
     rowSelection: "multiple",
     // animateRows: true,
@@ -71428,7 +71427,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     totalAudioFiles = 0;
-    document.getElementById("progressBar").value = 0;
     document.getElementById("progressText").innerHTML = "Loading...";
 
     const fileHandles = await getAudioFileHandles(libraryDirectory);
@@ -71501,7 +71499,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       gridOptions.api.applyTransaction({ add: [track] });
 
       const progress = ((i + 1) / totalAudioFiles) * 100;
-      document.getElementById("progressBar").value = progress;
       document.getElementById("progressText").innerHTML =
         "Loading... (" + (totalAudioFiles - i - 1) + " tracks left)";
     }
@@ -71540,6 +71537,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const track = tracks[index];
     if (track) {
       audio = new Audio(track.url);
+
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: track.title,
+          artist: track.artist,
+          album: track.album,
+          // TODO: fix type
+          artwork: [
+            { src: track.coverArt, sizes: '512x512', type: 'image/png' }
+          ]
+        });
+      }
+
       audio.play();
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
       document.getElementById("currentTrackTitle").textContent = track.title;
@@ -71551,7 +71561,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         document.getElementById("elapsed").textContent = formatDuration(audio.currentTime);
         const progressBar = document.getElementById("progressBar");
         const percentage = (audio.currentTime / audio.duration) * 100;
-        progressBar.value = percentage;
+        progressBar.value = isFinite(percentage) ? percentage : 0;
       });
       audio.addEventListener("ended", function () {
         nextTrack();
@@ -71575,36 +71585,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (audio && !audio.paused) {
       audio.pause();
       document.getElementById("playPauseIcon").src = "assets/play.svg";
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'paused';
+      }
     } else if (audio) {
       audio.play();
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'playing';
+      }
     }
   }
 
   if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: 'My Web Player',
-      artist: 'Myself',
-      album: 'My Album',
-      artwork: [
-        { src: 'album-art.png', sizes: '512x512', type: 'image/png' }
-      ]
-    });
-
     navigator.mediaSession.setActionHandler('play', function () {
-      audio.play();
-      navigator.mediaSession.playbackState = 'playing';
+      pauseAudio();
     });
 
     navigator.mediaSession.setActionHandler('pause', function () {
-      audio.pause();
-      navigator.mediaSession.playbackState = 'paused';
+      pauseAudio();
     });
 
     navigator.mediaSession.setActionHandler('previoustrack', function () {
+      previousTrack();
     });
 
     navigator.mediaSession.setActionHandler('nexttrack', function () {
+      nextTrack();
     });
   }
 });
