@@ -352,7 +352,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   function previousTrack() {
     if (currentTrackIndex > 0) {
-      loadAudio(currentTrackIndex - 1);
+      if (audio.currentTime > 2) {
+        audio.currentTime = 0;
+      } else {
+        loadAudio(currentTrackIndex - 1);
+      }
     }
   }
 
