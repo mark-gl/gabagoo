@@ -178,8 +178,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
       progressMouseDown = true;
       const progressBarWidth = this.offsetWidth;
       const clickPosition = e.pageX - getOffsetLeft(this);
-      const percentage = clickPosition / progressBarWidth;
-      audio.currentTime = audio.duration * percentage;
+      const percentage = clickPosition / progressBarWidth * 100;
+      progressBar.value = isFinite(percentage) ? percentage : 0;
+      const duration = Math.min(audio.duration, Math.max(0, clickPosition / progressBarWidth * audio.duration));
+      document.getElementById("elapsed").textContent = formatDuration(duration);
     }
   });
 
@@ -187,13 +189,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (progressMouseDown) {
       const progressBarWidth = progressBar.offsetWidth;
       const clickPosition = e.pageX - getOffsetLeft(progressBar);
-      const percentage = clickPosition / progressBarWidth;
-      audio.currentTime = audio.duration * percentage;
+      const percentage = clickPosition / progressBarWidth * 100;
+      progressBar.value = isFinite(percentage) ? percentage : 0;
+      const duration = Math.min(audio.duration, Math.max(0, clickPosition / progressBarWidth * audio.duration));
+      document.getElementById("elapsed").textContent = formatDuration(duration);
     }
   });
 
   document.addEventListener("mouseup", function (e) {
-    progressMouseDown = false;
+    if (progressMouseDown) {
+      progressMouseDown = false;
+      const progressBarWidth = progressBar.offsetWidth;
+      const clickPosition = e.pageX - getOffsetLeft(progressBar);
+      const percentage = clickPosition / progressBarWidth;
+      audio.currentTime = audio.duration * percentage;
+    }
   });
 
   document.getElementById("currentTrackTitle").addEventListener("click", function () {
@@ -429,10 +439,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("duration").textContent = formatDuration(track.length);
       currentTrackIndex = index;
       audio.addEventListener("timeupdate", function () {
-        document.getElementById("elapsed").textContent = formatDuration(audio.currentTime);
-        const progressBar = document.getElementById("progressBar");
-        const percentage = (audio.currentTime / audio.duration) * 100;
-        progressBar.value = isFinite(percentage) ? percentage : 0;
+        if (!progressMouseDown) {
+          document.getElementById("elapsed").textContent = formatDuration(audio.currentTime);
+          const progressBar = document.getElementById("progressBar");
+          const percentage = (audio.currentTime / audio.duration) * 100;
+          progressBar.value = isFinite(percentage) ? percentage : 0;
+        }
       });
       audio.addEventListener("ended", function () {
         nextTrack(true);

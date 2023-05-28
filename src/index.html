@@ -28,7 +28,7 @@
   <footer class="player-footer">
     <div class="player-left-controls">
       <img class="track-art" id="currentTrackArt" src="assets/music.svg" style="background-color: lightgray"
-        alt="Album Art" />
+        alt="Album Art" draggable="false" />
       <div class="track-details">
         <div class="track-details-text track-details-title" id="currentTrackTitle">
           No Title
@@ -47,19 +47,19 @@
         <span id="elapsed">0:00</span>
         <div class="player-middle-lower-centre">
           <button id="shuffleButton" class="control-button control-button-small">
-            <img src="assets/shuffle-solid.svg" alt="Shuffle" />
+            <img src="assets/shuffle-solid.svg" alt="Shuffle" draggable="false" />
           </button>
           <button id="prevButton" class="control-button">
-            <img src="assets/skip-back.svg" alt="Previous Track" />
+            <img src="assets/skip-back.svg" alt="Previous Track" draggable="false" />
           </button>
           <button id="pauseButton" class="control-button control-button-big">
-            <img id="playPauseIcon" src="assets/play.svg" alt="Play/Pause" />
+            <img id="playPauseIcon" src="assets/play.svg" alt="Play/Pause" draggable="false" />
           </button>
           <button id="nextButton" class="control-button">
-            <img src="assets/skip-forward.svg" alt="Next Track" />
+            <img src="assets/skip-forward.svg" alt="Next Track" draggable="false" />
           </button>
           <button id="repeatButton" class="control-button control-button-small">
-            <img src="assets/repeat-solid.svg" alt="Repeat" />
+            <img src="assets/repeat-solid.svg" alt="Repeat" draggable="false" />
             <div id="repeatOne" style="position: absolute; display: none;"></div>
           </button>
         </div>
@@ -73,7 +73,7 @@
         <progress id="volumeControl" value="1" max="1"></progress>
       </div>
       <button id="loadButton" class="control-button right-button">
-        <img src="assets/upload-solid.svg" alt="Add Library Folder" />
+        <img src="assets/upload-solid.svg" alt="Add Library Folder" draggable="false" />
       </button>
     </div>
   </footer>
