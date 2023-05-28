@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let isShuffle = false;
   let isRepeat = false;
   let isRepeatOne = false;
+  let progressMouseDown = false;
+  let volumeMouseDown = false;
 
   const splitInstance = Split(['#split-0', '#split-1'], {
     minSize: 0,
@@ -84,7 +86,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       loadAudio(index);
     },
     overlayLoadingTemplate: 'Loading...<span id="progressText"></span>',
-    overlayNoRowsTemplate: `Your library is empty, click 'Select Library Folder' to add some files.`,
+    overlayNoRowsTemplate: `Your library is empty, click the upload icon to add some files.`,
     rowData: [],
   };
 
@@ -157,7 +159,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       isRepeat = true;
     }
   });
-  let progressMouseDown = false;
 
   function getOffsetLeft(elem) {
     var offsetLeft = 0;
@@ -170,6 +171,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   const progressBar = document.getElementById("progressBar");
+  const volumeBar = document.getElementById("volumeControl");
 
   progressBar.addEventListener("mousedown", function (e) {
     if (audio) {
@@ -198,20 +200,54 @@ document.addEventListener("DOMContentLoaded", (event) => {
     gridOptions.api.ensureIndexVisible(currentTrackIndex, 'middle');
   });
 
-  document.getElementById("volumeSlider").oninput = function () {
-    const maxVolumeLevel = 1;
-    const minVolumeLevel = 0.01; // almost silent
-    const position = this.value;
-
-    // Special case for minimum position of slider
-    if (position <= 0) {
-      audio.volume = 0;
-    } else {
-      // Calculate volume on a log scale
-      const scale = Math.log(maxVolumeLevel / minVolumeLevel);
-      audio.volume = minVolumeLevel * Math.exp(scale * position);
+  function setVolume(newValue) {
+    if (audio) {
+      const maxVolumeLevel = 1;
+      const minVolumeLevel = 0.01;
+      if (newValue <= 0) {
+        audio.volume = 0;
+      } else {
+        // Calculate volume on a log scale
+        const scale = Math.log(maxVolumeLevel / minVolumeLevel);
+        const newVolume = minVolumeLevel * Math.exp(scale * newValue);
+        if (newVolume > 1) {
+          audio.volume = 1;
+        }
+        else {
+          audio.volume = newVolume;
+        }
+      }
     }
-  };
+  }
+
+  function updateVolumeSlider(e) {
+    const progressBarWidth = volumeBar.offsetWidth;
+    const clickPosition = e.pageX - getOffsetLeft(volumeBar);
+    volumeBar.value = clickPosition / progressBarWidth;
+    var volumeHandle = document.getElementById('volumeHandle');
+    volumeHandle.style.left = (volumeBar.value * 100) + '%';
+    setVolume(volumeBar.value);
+  }
+
+  volumeBar.addEventListener("mousedown", function (e) {
+    volumeMouseDown = true;
+    updateVolumeSlider(e);
+  });
+
+  document.getElementById("volumeHandle").addEventListener("mousedown", function (e) {
+    volumeMouseDown = true;
+    updateVolumeSlider(e);
+  });
+
+  document.addEventListener("mousemove", function (e) {
+    if (volumeMouseDown) {
+      updateVolumeSlider(e);
+    }
+  });
+
+  document.addEventListener("mouseup", function (e) {
+    volumeMouseDown = false;
+  });
 
   async function getDirectory() {
     libraryDirectory = await window.showDirectoryPicker({

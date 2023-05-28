@@ -36,7 +36,6 @@ body {
 .tracklist {
   width: 100%;
   height: calc(100vh - 75px);
-  /* Adjust the height to account for footer */
 }
 
 progress {
@@ -45,7 +44,6 @@ progress {
   width: 100%;
   height: 6px;
   margin-bottom: 4px;
-  cursor: pointer;
 }
 
 progress::-webkit-progress-bar {
@@ -61,6 +59,46 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
   background-color: #4c9de4;
   border-radius: 10px;
+}
+
+.volume-slider {
+  position: relative;
+  height: 10px;
+  width: 100px;
+  margin-left: 20px;
+}
+
+.volume-handle {
+  position: absolute;
+  top: 75%;
+  height: 12px;
+  width: 12px;
+  left: 100%;
+  background: #4c9de4;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#volumeControl {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+}
+
+#volumeControl::-webkit-progress-bar {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+#volumeControl::-webkit-progress-value {
+  background-color: #4c9de4;
+  border-radius: 5px;
+}
+
+#volumeControl::-moz-progress-bar {
+  background-color: #4c9de4;
+  border-radius: 5px;
 }
 
 .track-art {
@@ -138,6 +176,7 @@ progress::-moz-progress-bar {
   flex: 0 0 auto;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding-right: 20px;
 }
 
@@ -185,6 +224,8 @@ progress::-moz-progress-bar {
 
 .right-button {
   margin-left: 20px;
+  font-size: 20px;
+  transform: translateY(10%);
 }
 
 #volumeSlider {
@@ -229,8 +270,4 @@ progress::-moz-progress-bar {
 .search-clear-button img {
   width: 16px;
   height: 16px;
-}
-
-.ag-row.playing {
-  background-color: blue;
 }
