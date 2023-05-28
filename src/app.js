@@ -2,18 +2,21 @@ import { Grid } from "ag-grid-community";
 import Split from "split.js";
 import { parseBlob } from "music-metadata-browser";
 
+import dbFunctions from "./db.js";
+
 document.addEventListener("DOMContentLoaded", (event) => {
   let currentTrackIndex = null;
   let tracks = [];
   let audio;
   let libraryDirectory;
-  let db;
   let sidebarWidth;
   let isShuffle = false;
   let isRepeat = false;
   let isRepeatOne = false;
   let progressMouseDown = false;
   let volumeMouseDown = false;
+
+  dbFunctions.init();
 
   const splitInstance = Split(['#split-0', '#split-1'], {
     minSize: 0,
@@ -40,21 +43,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       splitInstance.setSizes([12, 88]);
     }
   });
-
-  // Database
-  let openRequest = indexedDB.open("audioMetadataDB", 1);
-  openRequest.onupgradeneeded = function (event) {
-    db = event.target.result;
-    if (!db.objectStoreNames.contains("metadata")) {
-      db.createObjectStore("metadata", { keyPath: "name" });
-    }
-  };
-  openRequest.onsuccess = function (event) {
-    db = event.target.result;
-  };
-  openRequest.onerror = function (event) {
-    console.log("IndexedDB error: " + event.target.errorCode);
-  };
 
   const gridOptions = {
     suppressCellFocus: true,
@@ -313,8 +301,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let progress = document.getElementById("progressText")
     if (progress != null) {
       progress.textContent = "Loading... (0/" + totalAudioFiles + " files scanned)";
-    }    
-    const metadataPromises = fileHandles.map(getMetadata);
+    }
+    const metadataPromises = fileHandles.map(dbFunctions.getMetadata);
 
     for (let i = 0; i < fileHandles.length; i++) {
       let metadata = await metadataPromises[i];
@@ -322,9 +310,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       if (!metadata) {
         metadata = await parseBlob(fileHandles[i]);
         metadata.name = fileHandles[i].relativePath;
-        let tx = db.transaction("metadata", "readwrite");
-        let store = tx.objectStore("metadata");
-        store.add(metadata);
+        dbFunctions.storeMetadata(metadata);
       }
 
       const url = URL.createObjectURL(fileHandles[i]);
@@ -385,27 +371,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
       }
     }
     gridOptions.api.applyTransaction({ add: tracks });
-  }
-
-  async function getMetadata(file) {
-    let metadata;
-    let tx = db.transaction("metadata", "readonly");
-    let store = tx.objectStore("metadata");
-    let request = store.get(file.relativePath);
-
-    await new Promise((resolve, reject) => {
-      request.onsuccess = function () {
-        if (request.result) {
-          metadata = request.result;
-        }
-        resolve();
-      };
-      request.onerror = function () {
-        reject(request.error);
-      };
-    });
-
-    return metadata;
   }
 
   function loadAudio(index) {

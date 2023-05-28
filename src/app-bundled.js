@@ -23824,19 +23824,20 @@ function config (name) {
 var _agGridCommunity = require("ag-grid-community");
 var _split = _interopRequireDefault(require("split.js"));
 var _musicMetadataBrowser = require("music-metadata-browser");
+var _db = _interopRequireDefault(require("./db.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 document.addEventListener("DOMContentLoaded", event => {
   let currentTrackIndex = null;
   let tracks = [];
   let audio;
   let libraryDirectory;
-  let db;
   let sidebarWidth;
   let isShuffle = false;
   let isRepeat = false;
   let isRepeatOne = false;
   let progressMouseDown = false;
   let volumeMouseDown = false;
+  _db.default.init();
   const splitInstance = (0, _split.default)(['#split-0', '#split-1'], {
     minSize: 0,
     snapOffset: 40,
@@ -23860,23 +23861,6 @@ document.addEventListener("DOMContentLoaded", event => {
       splitInstance.setSizes([12, 88]);
     }
   });
-
-  // Database
-  let openRequest = indexedDB.open("audioMetadataDB", 1);
-  openRequest.onupgradeneeded = function (event) {
-    db = event.target.result;
-    if (!db.objectStoreNames.contains("metadata")) {
-      db.createObjectStore("metadata", {
-        keyPath: "name"
-      });
-    }
-  };
-  openRequest.onsuccess = function (event) {
-    db = event.target.result;
-  };
-  openRequest.onerror = function (event) {
-    console.log("IndexedDB error: " + event.target.errorCode);
-  };
   const gridOptions = {
     suppressCellFocus: true,
     suppressDragLeaveHidesColumns: true,
@@ -24132,15 +24116,13 @@ document.addEventListener("DOMContentLoaded", event => {
     if (progress != null) {
       progress.textContent = "Loading... (0/" + totalAudioFiles + " files scanned)";
     }
-    const metadataPromises = fileHandles.map(getMetadata);
+    const metadataPromises = fileHandles.map(_db.default.getMetadata);
     for (let i = 0; i < fileHandles.length; i++) {
       let metadata = await metadataPromises[i];
       if (!metadata) {
         metadata = await (0, _musicMetadataBrowser.parseBlob)(fileHandles[i]);
         metadata.name = fileHandles[i].relativePath;
-        let tx = db.transaction("metadata", "readwrite");
-        let store = tx.objectStore("metadata");
-        store.add(metadata);
+        _db.default.storeMetadata(metadata);
       }
       const url = URL.createObjectURL(fileHandles[i]);
       let track;
@@ -24193,24 +24175,6 @@ document.addEventListener("DOMContentLoaded", event => {
     gridOptions.api.applyTransaction({
       add: tracks
     });
-  }
-  async function getMetadata(file) {
-    let metadata;
-    let tx = db.transaction("metadata", "readonly");
-    let store = tx.objectStore("metadata");
-    let request = store.get(file.relativePath);
-    await new Promise((resolve, reject) => {
-      request.onsuccess = function () {
-        if (request.result) {
-          metadata = request.result;
-        }
-        resolve();
-      };
-      request.onerror = function () {
-        reject(request.error);
-      };
-    });
-    return metadata;
   }
   function loadAudio(index) {
     currentTrackIndex = index;
@@ -24330,4 +24294,59 @@ document.addEventListener("DOMContentLoaded", event => {
   }
 });
 
-},{"ag-grid-community":1,"music-metadata-browser":16,"split.js":113}]},{},[121]);
+},{"./db.js":122,"ag-grid-community":1,"music-metadata-browser":16,"split.js":113}],122:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+let db;
+function init() {
+  let openRequest = indexedDB.open("audioMetadataDB", 1);
+  openRequest.onupgradeneeded = function (event) {
+    db = event.target.result;
+    if (!db.objectStoreNames.contains("metadata")) {
+      db.createObjectStore("metadata", {
+        keyPath: "name"
+      });
+    }
+  };
+  openRequest.onsuccess = function (event) {
+    db = event.target.result;
+  };
+  openRequest.onerror = function (event) {
+    console.log("IndexedDB error: " + event.target.errorCode);
+  };
+}
+function storeMetadata(metadata) {
+  let tx = db.transaction("metadata", "readwrite");
+  let store = tx.objectStore("metadata");
+  store.add(metadata);
+}
+async function getMetadata(file) {
+  let metadata;
+  let tx = db.transaction("metadata", "readonly");
+  let store = tx.objectStore("metadata");
+  let request = store.get(file.relativePath);
+  await new Promise((resolve, reject) => {
+    request.onsuccess = function () {
+      if (request.result) {
+        metadata = request.result;
+      }
+      resolve();
+    };
+    request.onerror = function () {
+      reject(request.error);
+    };
+  });
+  return metadata;
+}
+var _default = {
+  init: init,
+  storeMetadata: storeMetadata,
+  getMetadata: getMetadata
+};
+exports.default = _default;
+
+},{}]},{},[121]);
