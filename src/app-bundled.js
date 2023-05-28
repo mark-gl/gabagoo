@@ -24090,10 +24090,10 @@ document.addEventListener("DOMContentLoaded", event => {
       id: "libraryDirectory",
       startIn: "music"
     });
+    console.log(libraryDirectory.name);
     for await (const entry of libraryDirectory.values()) {
       if (entry.kind === "directory") {
-        // Can display these when re-prompting to indicate the chosen library folder
-        console.log(`Found subdirectory: ${entry.name}`);
+        console.log(`\t${entry.name}`);
       }
     }
   }
