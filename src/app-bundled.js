@@ -71234,6 +71234,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let libraryDirectory;
   let db;
   let sidebarWidth;
+  let isShuffle = false;
+  let isRepeat = false;
+  let isRepeatOne = false;
 
   const splitInstance = Split(['#split-0', '#split-1'], {
     minSize: 0,
@@ -71356,6 +71359,28 @@ document.addEventListener("DOMContentLoaded", (event) => {
   button3.addEventListener("click", pauseAudio);
   const button4 = document.getElementById("nextButton");
   button4.addEventListener("click", nextTrack);
+
+  document.getElementById('shuffleButton').addEventListener('click', function () {
+    this.classList.toggle('selected');
+    isShuffle = !isShuffle;
+  });
+
+  document.getElementById('repeatButton').addEventListener('click', function () {
+    var repeatOne = document.getElementById('repeatOne');
+
+    if (this.classList.contains('selected') && repeatOne.style.display === 'none') {
+      repeatOne.style.display = 'inline';
+      isRepeatOne = true;
+      isRepeat = false;
+    } else if (this.classList.contains('selected')) {
+      this.classList.remove('selected');
+      repeatOne.style.display = 'none';
+      isRepeatOne = false;
+    } else {
+      this.classList.add('selected');
+      isRepeat = true;
+    }
+  });
   let progressMouseDown = false;
 
   function getOffsetLeft(elem) {
@@ -71603,20 +71628,41 @@ document.addEventListener("DOMContentLoaded", (event) => {
       });
     }
   }
-
   function nextTrack() {
-    if (currentTrackIndex !== null && currentTrackIndex < tracks.length - 1) {
-      loadAudio(currentTrackIndex + 1);
+    let nextTrackIndex = null;
+
+    if (isShuffle) {
+      nextTrackIndex = Math.floor(Math.random() * tracks.length);
+    } else if (isRepeatOne) {
+      nextTrackIndex = currentTrackIndex;
+    } else if (currentTrackIndex !== null && currentTrackIndex < tracks.length - 1) {
+      nextTrackIndex = currentTrackIndex + 1;
+    } else if (isRepeat && currentTrackIndex === tracks.length - 1) {
+      nextTrackIndex = 0;
+    }
+
+    if (nextTrackIndex !== null) {
+      loadAudio(nextTrackIndex);
     }
   }
 
   function previousTrack() {
-    if (currentTrackIndex > 0) {
-      if (audio.currentTime > 2) {
-        audio.currentTime = 0;
-      } else {
-        loadAudio(currentTrackIndex - 1);
-      }
+    let previousTrackIndex = null;
+
+    if (isShuffle) {
+      previousTrackIndex = Math.floor(Math.random() * tracks.length);
+    } else if (isRepeatOne) {
+      previousTrackIndex = currentTrackIndex;
+    } else if (currentTrackIndex > 0) {
+      previousTrackIndex = currentTrackIndex - 1;
+    } else if (isRepeat && currentTrackIndex === 0) {
+      previousTrackIndex = tracks.length - 1;
+    }
+
+    if (previousTrackIndex !== null) {
+      loadAudio(previousTrackIndex);
+    } else if (audio.currentTime > 2) {
+      audio.currentTime = 0;
     }
   }
 

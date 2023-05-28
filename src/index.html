@@ -46,6 +46,9 @@
       <div class="player-middle-lower">
         <span id="elapsed">0:00</span>
         <div class="player-middle-lower-centre">
+          <button id="shuffleButton" class="control-button control-button-small">
+            <img src="assets/shuffle-solid.svg" alt="Shuffle" />
+          </button>
           <button id="prevButton" class="control-button">
             <img src="assets/skip-back.svg" alt="Previous Track" />
           </button>
@@ -54,6 +57,10 @@
           </button>
           <button id="nextButton" class="control-button">
             <img src="assets/skip-forward.svg" alt="Next Track" />
+          </button>
+          <button id="repeatButton" class="control-button control-button-small">
+            <img src="assets/repeat-solid.svg" alt="Repeat" />
+            <div id="repeatOne" style="position: absolute; display: none;"></div>
           </button>
         </div>
         <span id="duration">0:00</span>

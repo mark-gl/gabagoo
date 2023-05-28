@@ -152,8 +152,34 @@ progress::-moz-progress-bar {
 }
 
 .control-button-big img {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
+}
+
+.control-button-small {
+  position: relative;
+}
+
+.control-button-small img {
+  padding: 10px;
+  width: 14px;
+  height: 14px;
+}
+
+.control-button-small.selected img {
+  filter: invert(50%) sepia(50%) saturate(500%) hue-rotate(180deg) brightness(100%) contrast(100%);
+}
+
+#repeatOne {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  width: 4px;
+  height: 4px;
+  background-color: #6291E6;
+  border-radius: 45%;
 }
 
 .right-button {
