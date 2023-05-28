@@ -23823,7 +23823,7 @@ function config (name) {
 
 var _agGridCommunity = require("ag-grid-community");
 var _split = _interopRequireDefault(require("split.js"));
-var _musicMetadataBrowser = _interopRequireDefault(require("music-metadata-browser"));
+var _musicMetadataBrowser = require("music-metadata-browser");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 document.addEventListener("DOMContentLoaded", event => {
   let currentTrackIndex = null;
@@ -23935,7 +23935,7 @@ document.addEventListener("DOMContentLoaded", event => {
       const index = tracks.findIndex(track => track.url === event.data.url);
       loadAudio(index);
     },
-    overlayLoadingTemplate: 'Loading...<span id="progressText"></span>',
+    overlayLoadingTemplate: '<span id="progressText">Loading...</span>',
     overlayNoRowsTemplate: `Your library is empty, click the upload icon to add some files.`,
     rowData: []
   };
@@ -24130,13 +24130,13 @@ document.addEventListener("DOMContentLoaded", event => {
     gridOptions.api.showLoadingOverlay();
     let progress = document.getElementById("progressText");
     if (progress != null) {
-      progress.innerHTML = " (0/" + totalAudioFiles + " files scanned)";
+      progress.textContent = "Loading... (0/" + totalAudioFiles + " files scanned)";
     }
     const metadataPromises = fileHandles.map(getMetadata);
     for (let i = 0; i < fileHandles.length; i++) {
       let metadata = await metadataPromises[i];
       if (!metadata) {
-        metadata = await _musicMetadataBrowser.default.parseBlob(fileHandles[i]);
+        metadata = await (0, _musicMetadataBrowser.parseBlob)(fileHandles[i]);
         metadata.name = fileHandles[i].relativePath;
         let tx = db.transaction("metadata", "readwrite");
         let store = tx.objectStore("metadata");
@@ -24187,7 +24187,7 @@ document.addEventListener("DOMContentLoaded", event => {
       tracks.push(track);
       let progress = document.getElementById("progressText");
       if (progress != null) {
-        progress.innerHTML = " (" + (i - 1) + "/" + totalAudioFiles + " files scanned)";
+        progress.innerHTML = "Loading... (" + (i - 1) + "/" + totalAudioFiles + " files scanned)";
       }
     }
     gridOptions.api.applyTransaction({
