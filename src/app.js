@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           ]
         });
       }
-
+      setVolume(volumeBar.value);
       audio.play();
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
       document.getElementById("currentTrackTitle").textContent = track.title;
