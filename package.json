@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "watch": "watchify src/app.js -o src/app-bundled.js"
+    "watch": "watchify src/app.js -p esmify -o src/app-bundled.js"
   },
   "keywords": [],
   "author": "",
@@ -11,6 +11,7 @@
   "dependencies": {
     "ag-grid-community": "^29.3.5",
     "browserify": "^17.0.0",
+    "esmify": "^2.1.1",
     "music-metadata-browser": "^2.5.10",
     "split.js": "^1.6.5"
   },

@@ -1,8 +1,8 @@
-document.addEventListener("DOMContentLoaded", (event) => {
-  const musicMetadata = require("music-metadata-browser");
-  const { Grid } = require("ag-grid-community");
-  const Split = require("split.js");
+import { Grid } from "ag-grid-community";
+import Split from "split.js";
+import musicMetadata from "music-metadata-browser";
 
+document.addEventListener("DOMContentLoaded", (event) => {
   let currentTrackIndex = null;
   let tracks = [];
   let audio;
