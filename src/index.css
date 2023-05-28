@@ -149,6 +149,7 @@ progress::-moz-progress-bar {
 .control-button img {
   width: 24px;
   height: 24px;
+  filter: invert(30%) brightness(100%) contrast(100%);
 }
 
 .control-button-big img {
