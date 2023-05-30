@@ -1,6 +1,7 @@
 import { Grid } from "ag-grid-community";
 import Split from "split.js";
 import { parseBlob } from "music-metadata-browser";
+import pica from "pica";
 
 import dbFunctions from "./db.js";
 
@@ -337,90 +338,98 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const metadataPromises = fileHandles.map(dbFunctions.getMetadata);
 
     for (let i = 0; i < fileHandles.length; i++) {
-      let metadata = await metadataPromises[i];
-
-      if (!metadata) {
-        metadata = await parseBlob(fileHandles[i]);
-        metadata.name = fileHandles[i].relativePath;
-        dbFunctions.storeMetadata(metadata);
-      }
-
+      let track = await metadataPromises[i];
       const url = URL.createObjectURL(fileHandles[i]);
+      if (!track) {
+        let metadata = await parseBlob(fileHandles[i]);
 
-      let track;
-      let coverArt;
-      if (metadata.common.picture && metadata.common.picture[0]) {
-        let picture = metadata.common.picture[0];
-        let urlCreator = window.URL || window.webkitURL;
-        let imageUrl = urlCreator.createObjectURL(
-          new Blob([picture.data], { type: picture.format })
-        );
-        coverArt = imageUrl;
-      }
-      if (metadata.native && metadata.native['ID3v2.3']) {
-        const ID3v23Data = new Map(
-          metadata.native['ID3v2.3'].map((item) => [item.id, item.value])
-        );
-        track = {
-          title: ID3v23Data.get("TIT2"),
-          artist: ID3v23Data.get("TPE1"),
-          "album artist": ID3v23Data.get("TPE2"),
-          album: ID3v23Data.get("TALB"),
-          length: metadata.format.duration,
-          genre: ID3v23Data.get("TCON"),
-          year: ID3v23Data.get("TYER"),
-          url: url,
-          index: tracks.length,
-          coverArt: coverArt,
-          disc: Number(ID3v23Data.get("TPOS").split('/')[0]),
-          track: Number(ID3v23Data.get("TRCK").split('/')[0]),
-          composer: ID3v23Data.get("TCOM"),
-          comments: ID3v23Data.get("COMM") ? ID3v23Data.get("COMM").text : null,
-        };
-      } else if (metadata.native && metadata.native.iTunes) {
-        const iTunesData = new Map(
-          metadata.native.iTunes.map((item) => [item.id, item.value])
-        );
-        track = {
-          title: iTunesData.get("\u00A9nam"),
-          artist: iTunesData.get("\u00A9ART"),
-          "album artist": iTunesData.get("aART"),
-          album: iTunesData.get("\u00A9alb"),
-          length: metadata.format.duration,
-          genre: iTunesData.get("gnre") || iTunesData.get("\u00A9gen"),
-          year: iTunesData.get("\u00A9day"),
-          url: url,
-          index: tracks.length,
-          coverArt: coverArt,
-          disc: Number(iTunesData.get("disk").split('/')[0]),
-          track: Number(iTunesData.get("trkn").split('/')[0]),
-          composer: iTunesData.get("\u00A9wrt"),
-          comments: iTunesData.get("\u00A9cmt"),
-        };
-      } else {
-        track = {
-          title: metadata.common.title,
-          artist:
-            metadata.common.artists ||
-            (metadata.common.artist && [metadata.common.artist]) ||
-            (metadata.common.albumartist && [metadata.common.albumartist]),
-          "album artist": metadata.common.albumartist,
-          album: metadata.common.album,
-          length: metadata.format.duration,
-          genre: metadata.common.genre
-            ? metadata.common.genre.join(", ")
-            : null,
-          year: metadata.common.year,
-          url: url,
-          index: tracks.length,
-          coverArt: coverArt,
-          disk: Number(common.disk),
-          track: Number(common.track.no),
-          composer: metadata.common.composer,
-          comments: metadata.common.comment,
-        };
-      }
+        let coverArt;
+        if (metadata.common.picture && metadata.common.picture[0]) {
+          let picture = metadata.common.picture[0];
 
+          let canvas = document.createElement('canvas');
+          canvas.width = 200;
+          canvas.height = 200;
+
+          let img = new Image();
+          let coverArtPromise = new Promise((resolve) => {
+            img.onload = async () => {
+              await pica().resize(img, canvas).then(() => {
+                let coverArt = canvas.toDataURL();
+                resolve(coverArt);
+              });
+            };
+            img.src = `data:${picture.format};base64,${picture.data.toString('base64')}`;
+          });
+          coverArt = await coverArtPromise;
+        }
+
+        if (metadata.native && metadata.native['ID3v2.3']) {
+          const ID3v23Data = new Map(
+            metadata.native['ID3v2.3'].map((item) => [item.id, item.value])
+          );
+          track = {
+            name: fileHandles[i].relativePath,
+            title: ID3v23Data.get("TIT2"),
+            artist: ID3v23Data.get("TPE1"),
+            "album artist": ID3v23Data.get("TPE2"),
+            album: ID3v23Data.get("TALB"),
+            length: metadata.format.duration,
+            genre: ID3v23Data.get("TCON"),
+            year: ID3v23Data.get("TYER"),
+            index: tracks.length,
+            coverArt: coverArt,
+            disc: Number(ID3v23Data.get("TPOS").split('/')[0]),
+            track: Number(ID3v23Data.get("TRCK").split('/')[0]),
+            composer: ID3v23Data.get("TCOM"),
+            comments: ID3v23Data.get("COMM") ? ID3v23Data.get("COMM").text : null,
+          };
+        } else if (metadata.native && metadata.native.iTunes) {
+          const iTunesData = new Map(
+            metadata.native.iTunes.map((item) => [item.id, item.value])
+          );
+          track = {
+            name: fileHandles[i].relativePath,
+            title: iTunesData.get("\u00A9nam"),
+            artist: iTunesData.get("\u00A9ART"),
+            "album artist": iTunesData.get("aART"),
+            album: iTunesData.get("\u00A9alb"),
+            length: metadata.format.duration,
+            genre: iTunesData.get("gnre") || iTunesData.get("\u00A9gen"),
+            year: iTunesData.get("\u00A9day"),
+            index: tracks.length,
+            coverArt: coverArt,
+            disc: Number(iTunesData.get("disk").split('/')[0]),
+            track: Number(iTunesData.get("trkn").split('/')[0]),
+            composer: iTunesData.get("\u00A9wrt"),
+            comments: iTunesData.get("\u00A9cmt"),
+          };
+        } else {
+          track = {
+            name: fileHandles[i].relativePath,
+            title: metadata.common.title,
+            artist:
+              metadata.common.artists ||
+              (metadata.common.artist && [metadata.common.artist]) ||
+              (metadata.common.albumartist && [metadata.common.albumartist]),
+            "album artist": metadata.common.albumartist,
+            album: metadata.common.album,
+            length: metadata.format.duration,
+            genre: metadata.common.genre
+              ? metadata.common.genre.join(", ")
+              : null,
+            year: metadata.common.year,
+            index: tracks.length,
+            coverArt: coverArt,
+            disk: Number(common.disk),
+            track: Number(common.track.no),
+            composer: metadata.common.composer,
+            comments: metadata.common.comment,
+          };
+        }
+        dbFunctions.storeMetadata(track);
+      }
+      track.url = url;
       tracks.push(track);
 
       let progress = document.getElementById("progressText")

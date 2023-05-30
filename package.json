@@ -13,6 +13,7 @@
     "browserify": "^17.0.0",
     "esmify": "^2.1.1",
     "music-metadata-browser": "^2.5.10",
+    "pica": "^9.0.1",
     "split.js": "^1.6.5"
   },
   "devDependencies": {
