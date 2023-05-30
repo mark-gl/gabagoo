@@ -24135,7 +24135,21 @@ document.addEventListener("DOMContentLoaded", event => {
         }));
         coverArt = imageUrl;
       }
-      if (metadata.native && metadata.native.iTunes) {
+      if (metadata.native && metadata.native['ID3v2.3']) {
+        const ID3v23Data = new Map(metadata.native['ID3v2.3'].map(item => [item.id, item.value]));
+        track = {
+          title: ID3v23Data.get("TIT2"),
+          artist: ID3v23Data.get("TPE1"),
+          "album artist": ID3v23Data.get("TPE2"),
+          album: ID3v23Data.get("TALB"),
+          length: metadata.format.duration,
+          genre: ID3v23Data.get("TCON"),
+          year: ID3v23Data.get("TYER"),
+          url: url,
+          index: tracks.length,
+          coverArt: coverArt
+        };
+      } else if (metadata.native && metadata.native.iTunes) {
         const iTunesData = new Map(metadata.native.iTunes.map(item => [item.id, item.value]));
         track = {
           title: iTunesData.get("\u00A9nam"),
