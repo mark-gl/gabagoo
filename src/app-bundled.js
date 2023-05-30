@@ -23874,14 +23874,15 @@ document.addEventListener("DOMContentLoaded", event => {
         return null;
       }
     },
-    // animateRows: true,
     columnDefs: [{
       field: "title",
+      headerName: "Title",
       resizable: true,
       sortable: true,
       flex: 2
     }, {
       field: "length",
+      headerName: "Length",
       resizable: true,
       sortable: true,
       filter: false,
@@ -23891,28 +23892,61 @@ document.addEventListener("DOMContentLoaded", event => {
       }
     }, {
       field: "artist",
+      headerName: "Artist",
       resizable: true,
       sortable: true,
       flex: 1
     }, {
       field: "album artist",
+      headerName: "Album Artist",
       resizable: true,
       sortable: true,
       flex: 1
     }, {
       field: "album",
+      headerName: "Album",
       resizable: true,
       sortable: true,
       flex: 1
     }, {
       field: "genre",
+      headerName: "Genre",
       resizable: true,
       sortable: true,
       flex: 1
     }, {
       field: "year",
+      headerName: "Year",
       resizable: true,
       sortable: true,
+      flex: 0.5
+    }, {
+      field: "disc",
+      headerName: "Disc #",
+      resizable: true,
+      sortable: true,
+      hide: true,
+      flex: 0.5
+    }, {
+      field: "track",
+      headerName: "Track #",
+      resizable: true,
+      sortable: true,
+      hide: true,
+      flex: 0.5
+    }, {
+      field: "composer",
+      headerName: "Composer",
+      resizable: true,
+      sortable: true,
+      hide: true,
+      flex: 0.5
+    }, {
+      field: "comments",
+      headerName: "Comments",
+      resizable: true,
+      sortable: true,
+      hide: true,
       flex: 0.5
     }],
     onRowDoubleClicked: function (event) {
@@ -23923,6 +23957,20 @@ document.addEventListener("DOMContentLoaded", event => {
     overlayNoRowsTemplate: `Your library is empty, click the upload icon to add some files.`,
     rowData: []
   };
+  const contextMenu = document.getElementById('contextMenu');
+  let menuItemsHTML = '<div>';
+  const columnDefs = [...gridOptions.columnDefs].sort((a, b) => a.headerName.localeCompare(b.headerName));
+  for (let colDef of columnDefs) {
+    menuItemsHTML += `<div><input type="checkbox" id="${colDef.field}" ${!colDef.hide ? 'checked' : ''} />${colDef.headerName}</div>`;
+  }
+  menuItemsHTML += '</div>';
+  contextMenu.innerHTML = menuItemsHTML;
+  document.body.appendChild(contextMenu);
+  for (let colDef of gridOptions.columnDefs) {
+    document.getElementById(colDef.field).addEventListener('change', function () {
+      gridOptions.columnApi.setColumnVisible(colDef.field, this.checked);
+    });
+  }
   const searchInput = document.querySelector('#search-input');
   const searchClear = document.querySelector('#search-clear');
   searchInput.addEventListener('input', () => {
@@ -23953,6 +24001,18 @@ document.addEventListener("DOMContentLoaded", event => {
     tracks = newTracks;
     currentTrackIndex = tracks.findIndex(track => track.url === currentTrackUrl);
     gridOptions.api.redrawRows();
+  });
+  var headerViewport = document.querySelector('.ag-header-viewport');
+  headerViewport.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+    contextMenu.style.display = 'block';
+    contextMenu.style.left = `${e.clientX}px`;
+    contextMenu.style.top = `${e.clientY}px`;
+  });
+  window.addEventListener('mousedown', function (e) {
+    if (!contextMenu.contains(e.target)) {
+      contextMenu.style.display = 'none';
+    }
   });
   const button1 = document.getElementById("loadButton");
   button1.addEventListener("click", loadAudioFiles);
@@ -24147,7 +24207,11 @@ document.addEventListener("DOMContentLoaded", event => {
           year: ID3v23Data.get("TYER"),
           url: url,
           index: tracks.length,
-          coverArt: coverArt
+          coverArt: coverArt,
+          disc: Number(ID3v23Data.get("TPOS").split('/')[0]),
+          track: Number(ID3v23Data.get("TRCK").split('/')[0]),
+          composer: ID3v23Data.get("TCOM"),
+          comments: ID3v23Data.get("COMM") ? ID3v23Data.get("COMM").text : null
         };
       } else if (metadata.native && metadata.native.iTunes) {
         const iTunesData = new Map(metadata.native.iTunes.map(item => [item.id, item.value]));
@@ -24161,7 +24225,11 @@ document.addEventListener("DOMContentLoaded", event => {
           year: iTunesData.get("\u00A9day"),
           url: url,
           index: tracks.length,
-          coverArt: coverArt
+          coverArt: coverArt,
+          disc: Number(iTunesData.get("disk").split('/')[0]),
+          track: Number(iTunesData.get("trkn").split('/')[0]),
+          composer: iTunesData.get("\u00A9wrt"),
+          comments: iTunesData.get("\u00A9cmt")
         };
       } else {
         track = {
@@ -24174,12 +24242,13 @@ document.addEventListener("DOMContentLoaded", event => {
           year: metadata.common.year,
           url: url,
           index: tracks.length,
-          coverArt: coverArt
-          // disk: common.disk,
-          // track: common.track.no,
+          coverArt: coverArt,
+          disk: Number(common.disk),
+          track: Number(common.track.no),
+          composer: metadata.common.composer,
+          comments: metadata.common.comment
         };
       }
-
       tracks.push(track);
       let progress = document.getElementById("progressText");
       if (progress != null) {

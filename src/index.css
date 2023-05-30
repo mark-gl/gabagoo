@@ -274,7 +274,7 @@ progress::-moz-progress-bar {
 
 button.track-details-title {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-  Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 500;
   padding-bottom: 4px;
@@ -288,4 +288,15 @@ button.track-details-title {
   overflow: hidden;
   white-space: nowrap;
   display: inline-block;
+}
+
+.context-menu {
+  display: none;
+  position: absolute;
+  background-color: #fdfdfd;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  padding: 5px;
+  z-index: 1;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
