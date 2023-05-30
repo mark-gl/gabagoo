@@ -12,8 +12,8 @@
     "ag-grid-community": "^29.3.5",
     "browserify": "^17.0.0",
     "esmify": "^2.1.1",
+    "js-sha256": "^0.9.0",
     "music-metadata-browser": "^2.5.10",
-    "pica": "^9.0.1",
     "split.js": "^1.6.5"
   },
   "devDependencies": {

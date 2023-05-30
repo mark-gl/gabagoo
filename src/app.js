@@ -1,7 +1,6 @@
 import { Grid } from "ag-grid-community";
 import Split from "split.js";
 import { parseBlob } from "music-metadata-browser";
-import pica from "pica";
 
 import dbFunctions from "./db.js";
 
@@ -330,7 +329,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     const fileHandles = await getAudioFileHandles(libraryDirectory);
     totalAudioFiles = fileHandles.length;
-    gridOptions.api.showLoadingOverlay();
     let progress = document.getElementById("progressText")
     if (progress != null) {
       progress.textContent = "Loading... (0/" + totalAudioFiles + " files scanned)";
@@ -346,23 +344,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         let coverArt;
         if (metadata.common.picture && metadata.common.picture[0]) {
           let picture = metadata.common.picture[0];
-
-          let canvas = document.createElement('canvas');
-          canvas.width = 200;
-          canvas.height = 200;
-
-          let img = new Image();
-          let coverArtPromise = new Promise((resolve) => {
-            img.onload = async () => {
-              await pica().resize(img, canvas).then(() => {
-                let coverArt = canvas.toDataURL();
-                resolve(coverArt);
-              });
-            };
-            img.src = `data:${picture.format};base64,${picture.data.toString('base64')}`;
-          });
-          coverArt = await coverArtPromise;
-        }
+          coverArt = await dbFunctions.storeCoverArtGetHash(`data:${picture.format};base64,${picture.data.toString('base64')}`);
+        };
 
         if (metadata.native && metadata.native['ID3v2.3']) {
           const ID3v23Data = new Map(
@@ -432,15 +415,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
       track.url = url;
       tracks.push(track);
 
-      let progress = document.getElementById("progressText")
-      if (progress != null) {
-        progress.innerHTML = "Loading... (" + (i - 1) + "/" + totalAudioFiles + " files scanned)";
-      }
+      progress.innerHTML = "Loading... (" + (i - 1) + "/" + totalAudioFiles + " files scanned)";
+      gridOptions.api.applyTransaction({ add: [track] });
     }
-    gridOptions.api.applyTransaction({ add: tracks });
+    progress.innerHTML = "";
   }
 
-  function loadAudio(index) {
+  async function loadAudio(index) {
     currentTrackIndex = index;
     gridOptions.api.redrawRows();
     if (audio) {
@@ -450,24 +431,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const track = tracks[index];
     if (track) {
       audio = new Audio(track.url);
-
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: track.title,
-          artist: track.artist,
-          album: track.album,
-          // TODO: fix type
-          artwork: [
-            { src: track.coverArt, sizes: '512x512', type: 'image/png' }
-          ]
-        });
-      }
       setVolume(volumeBar.value);
       audio.play();
+
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
       document.getElementById("currentTrackTitle").textContent = track.title;
       document.getElementById("currentTrackArtist").textContent = track.artist;
-      document.getElementById("currentTrackArt").src = track.coverArt;
       document.getElementById("duration").textContent = formatDuration(track.length);
       currentTrackIndex = index;
       audio.addEventListener("timeupdate", function () {
@@ -481,6 +450,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
       audio.addEventListener("ended", function () {
         nextTrack(true);
       });
+
+      const coverArtData = await dbFunctions.getCoverArt(track.coverArt);
+      document.getElementById("currentTrackArt").src = coverArtData;
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: track.title,
+          artist: track.artist,
+          album: track.album,
+          // TODO: fix type
+          artwork: [
+            { src: coverArtData, sizes: '512x512', type: 'image/png' }
+          ]
+        });
+      }
     }
   }
 
