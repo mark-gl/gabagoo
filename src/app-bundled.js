@@ -24671,7 +24671,7 @@ document.addEventListener("DOMContentLoaded", event => {
   async function getAudioFileHandles(directoryHandle, relativePath = "") {
     let fileHandles = [];
     for await (const entry of directoryHandle.values()) {
-      const entryRelativePath = `${relativePath}/${entry.name}`;
+      const entryRelativePath = relativePath ? `${relativePath}/${entry.name}` : `${directoryHandle.name}/${entry.name}`;
       if (entry.kind === "file") {
         const file = await entry.getFile();
         if (!file.type.startsWith("audio/")) {
