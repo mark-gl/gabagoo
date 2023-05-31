@@ -301,9 +301,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   async function getAudioFileHandles(directoryHandle, relativePath = "") {
     let fileHandles = [];
     for await (const entry of directoryHandle.values()) {
-      const entryRelativePath = relativePath 
-      ? `${relativePath}/${entry.name}`
-      : `${directoryHandle.name}/${entry.name}`;
+      const entryRelativePath = relativePath
+        ? `${relativePath}/${entry.name}`
+        : `${directoryHandle.name}/${entry.name}`;
       if (entry.kind === "file") {
         const file = await entry.getFile();
         if (!file.type.startsWith("audio/")) {
@@ -465,6 +465,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
             { src: coverArtData, sizes: '512x512', type: 'image/png' }
           ]
         });
+        navigator.mediaSession.setActionHandler('play', function () {
+          pauseAudio();
+        });
+
+        navigator.mediaSession.setActionHandler('pause', function () {
+          pauseAudio();
+        });
+
+        navigator.mediaSession.setActionHandler('previoustrack', function () {
+          previousTrack();
+        });
+
+        navigator.mediaSession.setActionHandler('nexttrack', function () {
+          nextTrack(false);
+        });
       }
     }
   }
@@ -531,23 +546,5 @@ document.addEventListener("DOMContentLoaded", (event) => {
         navigator.mediaSession.playbackState = 'playing';
       }
     }
-  }
-
-  if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('play', function () {
-      pauseAudio();
-    });
-
-    navigator.mediaSession.setActionHandler('pause', function () {
-      pauseAudio();
-    });
-
-    navigator.mediaSession.setActionHandler('previoustrack', function () {
-      previousTrack();
-    });
-
-    navigator.mediaSession.setActionHandler('nexttrack', function () {
-      nextTrack(false);
-    });
   }
 });

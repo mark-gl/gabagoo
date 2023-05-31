@@ -24816,6 +24816,18 @@ document.addEventListener("DOMContentLoaded", event => {
             type: 'image/png'
           }]
         });
+        navigator.mediaSession.setActionHandler('play', function () {
+          pauseAudio();
+        });
+        navigator.mediaSession.setActionHandler('pause', function () {
+          pauseAudio();
+        });
+        navigator.mediaSession.setActionHandler('previoustrack', function () {
+          previousTrack();
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', function () {
+          nextTrack(false);
+        });
       }
     }
   }
@@ -24876,20 +24888,6 @@ document.addEventListener("DOMContentLoaded", event => {
         navigator.mediaSession.playbackState = 'playing';
       }
     }
-  }
-  if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('play', function () {
-      pauseAudio();
-    });
-    navigator.mediaSession.setActionHandler('pause', function () {
-      pauseAudio();
-    });
-    navigator.mediaSession.setActionHandler('previoustrack', function () {
-      previousTrack();
-    });
-    navigator.mediaSession.setActionHandler('nexttrack', function () {
-      nextTrack(false);
-    });
   }
 });
 
