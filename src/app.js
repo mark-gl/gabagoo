@@ -1,6 +1,7 @@
 import { Grid } from "ag-grid-community";
 import { parseBlob } from "music-metadata-browser";
 
+import { formatDuration } from "./utils.js";
 import dbFunctions from "./db.js";
 import colDefs from "./colDefs.js";
 
@@ -256,12 +257,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         console.log(`\t${entry.name}`);
       }
     }
-  }
-
-  function formatDuration(duration) {
-    const minutes = Math.floor(duration / 60);
-    const seconds = Math.floor(duration % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   }
 
   async function getAudioFileHandles(directoryHandle, relativePath = "") {
