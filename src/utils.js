@@ -67,3 +67,21 @@ export function getMetadata(metadata, coverHash, tracks, path) {
     };
   }
 }
+
+export const compareValues = (valueA, valueB, sortOrder) => {
+  if (typeof valueA === "string" && typeof valueB === "string") {
+    return (
+      valueA.localeCompare(valueB, undefined, {
+        sensitivity: "base",
+        ignorePunctuation: true,
+      }) * (sortOrder === "asc" ? 1 : -1)
+    );
+  }
+
+  if (valueA < valueB) {
+    return sortOrder === "asc" ? -1 : 1;
+  } else if (valueA > valueB) {
+    return sortOrder === "asc" ? 1 : -1;
+  }
+  return 0;
+};

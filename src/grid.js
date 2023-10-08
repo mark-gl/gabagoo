@@ -1,4 +1,4 @@
-import { formatDuration } from "./utils.js";
+import { formatDuration, compareValues } from "./utils.js";
 
 const colDefs = [
   {
@@ -74,6 +74,7 @@ export default {
   defaultColDef: {
     resizable: true,
     sortable: true,
+    comparator: (valueA, valueB) => compareValues(valueA, valueB, "asc"),
   },
   overlayLoadingTemplate: '<span id="progressText">Loading...</span>',
   overlayNoRowsTemplate: `Your library is empty, click the upload icon to add some files.`,
