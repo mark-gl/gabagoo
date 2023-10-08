@@ -2,13 +2,13 @@ import { Grid } from "ag-grid-community";
 import { parseBlob } from "music-metadata-browser";
 
 import dbFunctions from "./db.js";
+import colDefs from "./colDefs.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   let currentTrackIndex = null;
   let tracks = [];
   let audio;
   let libraryDirectory;
-  let sidebarWidth;
   let isShuffle = false;
   let isRepeat = false;
   let isRepeatOne = false;
@@ -28,93 +28,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         return null;
       }
     },
-    columnDefs: [
-      {
-        field: "title",
-        headerName: "Title",
-        resizable: true,
-        sortable: true,
-        flex: 2,
-      },
-      {
-        field: "length",
-        headerName: "Length",
-        resizable: true,
-        sortable: true,
-        filter: false,
-        flex: 0.5,
-        cellRenderer: function (params) {
-          return formatDuration(params.value);
-        },
-      },
-      {
-        field: "artist",
-        headerName: "Artist",
-        resizable: true,
-        sortable: true,
-        flex: 1,
-      },
-      {
-        field: "album artist",
-        headerName: "Album Artist",
-        resizable: true,
-        sortable: true,
-        flex: 1,
-      },
-      {
-        field: "album",
-        headerName: "Album",
-        resizable: true,
-        sortable: true,
-        flex: 1,
-      },
-      {
-        field: "genre",
-        headerName: "Genre",
-        resizable: true,
-        sortable: true,
-        flex: 1,
-      },
-      {
-        field: "year",
-        headerName: "Year",
-        resizable: true,
-        sortable: true,
-        flex: 0.5,
-      },
-      {
-        field: "disc",
-        headerName: "Disc #",
-        resizable: true,
-        sortable: true,
-        hide: true,
-        flex: 0.5,
-      },
-      {
-        field: "track",
-        headerName: "Track #",
-        resizable: true,
-        sortable: true,
-        hide: true,
-        flex: 0.5,
-      },
-      {
-        field: "composer",
-        headerName: "Composer",
-        resizable: true,
-        sortable: true,
-        hide: true,
-        flex: 0.5,
-      },
-      {
-        field: "comments",
-        headerName: "Comments",
-        resizable: true,
-        sortable: true,
-        hide: true,
-        flex: 0.5,
-      },
-    ],
+    columnDefs: colDefs,
     onRowDoubleClicked: function (event) {
       const index = tracks.findIndex((track) => track.url === event.data.url);
       loadAudio(index);
