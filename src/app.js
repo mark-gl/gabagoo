@@ -3,7 +3,7 @@ import { parseBlob } from "music-metadata-browser";
 
 import { formatDuration } from "./utils.js";
 import dbFunctions from "./db.js";
-import colDefs from "./colDefs.js";
+import grid from "./grid.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   let currentTrackIndex = null;
@@ -18,61 +18,24 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   dbFunctions.init();
 
-  const grid = {
-    suppressCellFocus: true,
-    suppressDragLeaveHidesColumns: true,
-    animateRows: true,
-    rowSelection: "multiple",
-    getRowStyle: function (params) {
-      if (params.node.rowIndex === currentTrackIndex) {
-        return { fontWeight: "bold" };
-      } else {
-        return null;
-      }
-    },
-    columnDefs: colDefs,
-    defaultColDef: {
-      resizable: true,
-      sortable: true,
-    },
-    onRowDoubleClicked: function (event) {
-      const index = tracks.findIndex((track) => track.url === event.data.url);
-      loadAudio(index);
-    },
-    overlayLoadingTemplate: '<span id="progressText">Loading...</span>',
-    overlayNoRowsTemplate: `Your library is empty, click the upload icon to add some files.`,
-    rowData: [],
-  };
-
-  const contextMenu = document.getElementById("contextMenu");
-  let menuItemsHTML = "<div>";
-  const columnDefs = [...colDefs].sort((a, b) =>
-    a.headerName.localeCompare(b.headerName)
-  );
-  for (let colDef of columnDefs) {
-    menuItemsHTML += `<div><input type="checkbox" id="${colDef.field}" ${
-      !colDef.hide ? "checked" : ""
-    } />${colDef.headerName}</div>`;
-  }
-  menuItemsHTML += "</div>";
-  contextMenu.innerHTML = menuItemsHTML;
-  document.body.appendChild(contextMenu);
-
-  const gridDiv = document.querySelector("#myGrid");
+  const gridDiv = document.querySelector("#grid");
   const gridOptions = grid;
+  gridOptions.getRowStyle = function (params) {
+    if (params.node.rowIndex === currentTrackIndex) {
+      return { fontWeight: "bold" };
+    } else {
+      return null;
+    }
+  };
   new Grid(gridDiv, gridOptions);
 
-  for (let colDef of colDefs) {
-    document
-      .getElementById(colDef.field)
-      .addEventListener("change", function () {
-        grid.columnApi.setColumnVisible(colDef.field, this.checked);
-      });
-  }
+  grid.api.addEventListener("rowDoubleClicked", function (event) {
+    const index = tracks.findIndex((track) => track.url === event.data.url);
+    loadAudio(index);
+  });
 
   grid.api.addEventListener("sortChanged", function () {
     const newTracks = [];
-    // (This is bad)
     for (let i = 0; i < grid.api.getDisplayedRowCount(); i++) {
       const rowNode = grid.api.getDisplayedRowAtIndex(i);
       const track = rowNode.data;
@@ -85,6 +48,28 @@ document.addEventListener("DOMContentLoaded", (event) => {
     );
     grid.api.redrawRows();
   });
+
+  const contextMenu = document.getElementById("contextMenu");
+  let menuItemsHTML = "<div>";
+  const columnDefs = [...grid.columnDefs].sort((a, b) =>
+    a.headerName.localeCompare(b.headerName)
+  );
+  for (let colDef of columnDefs) {
+    menuItemsHTML += `<div><input type="checkbox" id="${colDef.field}" ${
+      !colDef.hide ? "checked" : ""
+    } />${colDef.headerName}</div>`;
+  }
+  menuItemsHTML += "</div>";
+  contextMenu.innerHTML = menuItemsHTML;
+  document.body.appendChild(contextMenu);
+
+  for (let colDef of grid.columnDefs) {
+    document
+      .getElementById(colDef.field)
+      .addEventListener("change", function () {
+        grid.columnApi.setColumnVisible(colDef.field, this.checked);
+      });
+  }
 
   var headerViewport = document.querySelector(".ag-header-viewport");
   headerViewport.addEventListener("contextmenu", function (e) {

@@ -1,6 +1,6 @@
 import { formatDuration } from "./utils.js";
 
-export default [
+const colDefs = [
   {
     field: "title",
     headerName: "Title",
@@ -64,3 +64,18 @@ export default [
     flex: 0.5,
   },
 ];
+
+export default {
+  suppressCellFocus: true,
+  suppressDragLeaveHidesColumns: true,
+  animateRows: true,
+  rowSelection: "multiple",
+  columnDefs: colDefs,
+  defaultColDef: {
+    resizable: true,
+    sortable: true,
+  },
+  overlayLoadingTemplate: '<span id="progressText">Loading...</span>',
+  overlayNoRowsTemplate: `Your library is empty, click the upload icon to add some files.`,
+  rowData: [],
+};
