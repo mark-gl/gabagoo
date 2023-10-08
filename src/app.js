@@ -29,6 +29,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
       }
     },
     columnDefs: colDefs,
+    defaultColDef: {
+      resizable: true,
+      sortable: true,
+    },
     onRowDoubleClicked: function (event) {
       const index = tracks.findIndex((track) => track.url === event.data.url);
       loadAudio(index);
