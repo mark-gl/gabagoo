@@ -13,8 +13,7 @@
     "browserify": "^17.0.0",
     "esmify": "^2.1.1",
     "js-sha256": "^0.9.0",
-    "music-metadata-browser": "^2.5.10",
-    "split.js": "^1.6.5"
+    "music-metadata-browser": "^2.5.10"
   },
   "devDependencies": {
     "watchify": "^4.0.0"

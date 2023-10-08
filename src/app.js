@@ -1,5 +1,4 @@
 import { Grid } from "ag-grid-community";
-import Split from "split.js";
 import { parseBlob } from "music-metadata-browser";
 
 import dbFunctions from "./db.js";
@@ -17,32 +16,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let volumeMouseDown = false;
 
   dbFunctions.init();
-
-  const splitInstance = Split(['#split-0', '#split-1'], {
-    minSize: 0,
-    snapOffset: 40,
-    sizes: [12, 88],
-    onDragEnd: () => {
-      sidebarWidth = document.querySelector('#split-0').offsetWidth;
-    },
-  });
-  sidebarWidth = document.querySelector('#split-0').offsetWidth;
-
-  const ro = new ResizeObserver(entries => {
-    for (let entry of entries) {
-      const newLeftPaneSize = sidebarWidth / entry.contentRect.width * 100;
-      const newRightPaneSize = 100 - newLeftPaneSize;
-      splitInstance.setSizes([newLeftPaneSize, newRightPaneSize]);
-    }
-  });
-  ro.observe(document.body);
-
-  const gutter = document.querySelector('.gutter.gutter-horizontal');
-  gutter.addEventListener('click', () => {
-    if (sidebarWidth === 0) {
-      splitInstance.setSizes([12, 88]);
-    }
-  });
 
   const gridOptions = {
     suppressCellFocus: true,
@@ -95,26 +68,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       gridOptions.columnApi.setColumnVisible(colDef.field, this.checked);
     });
   }
-
-  const searchInput = document.querySelector('#search-input');
-  const searchClear = document.querySelector('#search-clear');
-
-  searchInput.addEventListener('input', () => {
-    const filterValue = searchInput.value.toLowerCase();
-    gridOptions.api.setQuickFilter(filterValue);
-    if (searchInput.value.length > 0) {
-      searchClear.style.display = 'block';
-    } else {
-      searchClear.style.display = 'none';
-    }
-  });
-
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchClear.style.display = 'none';
-    gridOptions.api.setQuickFilter('');
-  });
-
+  
   const eGridDiv = document.querySelector("#myGrid");
 
   new Grid(eGridDiv, gridOptions);
