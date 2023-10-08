@@ -1,7 +1,7 @@
 import { Grid } from "ag-grid-community";
 import { parseBlob } from "music-metadata-browser";
 
-import { formatDuration } from "./utils.js";
+import { formatDuration, getMetadata } from "./utils.js";
 import dbFunctions from "./db.js";
 import grid from "./grid.js";
 
@@ -294,80 +294,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
       const url = URL.createObjectURL(fileHandles[i]);
       if (!track) {
         let metadata = await parseBlob(fileHandles[i]);
-
-        let coverArt;
+        let coverHash;
         if (metadata.common.picture && metadata.common.picture[0]) {
           let picture = metadata.common.picture[0];
-          coverArt = await dbFunctions.storeCoverArtGetHash(
+          coverHash = await dbFunctions.storeCoverArtGetHash(
             `data:${picture.format};base64,${picture.data.toString("base64")}`
           );
         }
-
-        if (metadata.native && metadata.native["ID3v2.3"]) {
-          const ID3v23Data = new Map(
-            metadata.native["ID3v2.3"].map((item) => [item.id, item.value])
-          );
-          track = {
-            name: fileHandles[i].relativePath,
-            title: ID3v23Data.get("TIT2"),
-            artist: ID3v23Data.get("TPE1"),
-            "album artist": ID3v23Data.get("TPE2"),
-            album: ID3v23Data.get("TALB"),
-            length: metadata.format.duration,
-            genre: ID3v23Data.get("TCON"),
-            year: ID3v23Data.get("TYER"),
-            index: tracks.length,
-            coverArt: coverArt,
-            disc: Number(ID3v23Data.get("TPOS").split("/")[0]),
-            track: Number(ID3v23Data.get("TRCK").split("/")[0]),
-            composer: ID3v23Data.get("TCOM"),
-            comments: ID3v23Data.get("COMM")
-              ? ID3v23Data.get("COMM").text
-              : null,
-          };
-        } else if (metadata.native && metadata.native.iTunes) {
-          const iTunesData = new Map(
-            metadata.native.iTunes.map((item) => [item.id, item.value])
-          );
-          track = {
-            name: fileHandles[i].relativePath,
-            title: iTunesData.get("\u00A9nam"),
-            artist: iTunesData.get("\u00A9ART"),
-            "album artist": iTunesData.get("aART"),
-            album: iTunesData.get("\u00A9alb"),
-            length: metadata.format.duration,
-            genre: iTunesData.get("gnre") || iTunesData.get("\u00A9gen"),
-            year: iTunesData.get("\u00A9day"),
-            index: tracks.length,
-            coverArt: coverArt,
-            disc: Number(iTunesData.get("disk").split("/")[0]),
-            track: Number(iTunesData.get("trkn").split("/")[0]),
-            composer: iTunesData.get("\u00A9wrt"),
-            comments: iTunesData.get("\u00A9cmt"),
-          };
-        } else {
-          track = {
-            name: fileHandles[i].relativePath,
-            title: metadata.common.title,
-            artist:
-              metadata.common.artists ||
-              (metadata.common.artist && [metadata.common.artist]) ||
-              (metadata.common.albumartist && [metadata.common.albumartist]),
-            "album artist": metadata.common.albumartist,
-            album: metadata.common.album,
-            length: metadata.format.duration,
-            genre: metadata.common.genre
-              ? metadata.common.genre.join(", ")
-              : null,
-            year: metadata.common.year,
-            index: tracks.length,
-            coverArt: coverArt,
-            disk: Number(common.disk),
-            track: Number(common.track.no),
-            composer: metadata.common.composer,
-            comments: metadata.common.comment,
-          };
-        }
+        const path = fileHandles[i].relativePath;
+        track = getMetadata(metadata, coverHash, i, path);
         dbFunctions.storeMetadata(track);
       }
       track.url = url;
