@@ -1,71 +1,123 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>gabagoo</title>
+    <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="../node_modules/ag-grid-community/styles/ag-grid.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../node_modules/ag-grid-community/styles/ag-theme-balham.css"
+    />
+    <script src="app-bundled.js"></script>
+  </head>
 
-<head>
-  <title>gabagoo</title>
-  <link rel="stylesheet" href="index.css" />
-  <link rel="stylesheet" href="../node_modules/ag-grid-community/styles/ag-grid.css" />
-  <link rel="stylesheet" href="../node_modules/ag-grid-community/styles/ag-theme-balham.css" />
-  <script src="app-bundled.js"></script>
-</head>
+  <body>
+    <div class="context-menu" id="contextMenu"></div>
+    <div id="myGrid" class="tracklist ag-theme-balham"></div>
 
-<body>
-  <div class="context-menu" id="contextMenu"> </div>
-  <div id="myGrid" class="tracklist ag-theme-balham"></div>
+    <footer class="player-footer">
+      <div class="player-left-controls">
+        <img
+          class="track-art"
+          id="currentTrackArt"
+          src="assets/music.svg"
+          style="background-color: lightgray"
+          alt="Album Art"
+          draggable="false"
+        />
+        <div class="track-details">
+          <button
+            class="track-details-text track-details-title"
+            id="currentTrackTitle"
+          >
+            No Title
+          </button>
+          <div className="track-details-text" id="currentTrackArtist">
+            No Artist
+          </div>
+        </div>
+      </div>
 
-  <footer class="player-footer">
-    <div class="player-left-controls">
-      <img class="track-art" id="currentTrackArt" src="assets/music.svg" style="background-color: lightgray"
-        alt="Album Art" draggable="false" />
-      <div class="track-details">
-        <button class="track-details-text track-details-title" id="currentTrackTitle">
-          No Title
+      <div class="player-middle-controls">
+        <div class="player-middle-upper">
+          <progress
+            id="progressBar"
+            value="0"
+            max="100"
+            class="progress"
+          ></progress>
+        </div>
+        <div class="player-middle-lower">
+          <span id="elapsed">0:00</span>
+          <div class="player-middle-lower-centre">
+            <button
+              id="shuffleButton"
+              class="control-button control-button-small"
+            >
+              <img
+                src="assets/shuffle-solid.svg"
+                alt="Shuffle"
+                draggable="false"
+              />
+            </button>
+            <button id="prevButton" class="control-button">
+              <img
+                src="assets/skip-back.svg"
+                alt="Previous Track"
+                draggable="false"
+              />
+            </button>
+            <button id="pauseButton" class="control-button control-button-big">
+              <img
+                id="playPauseIcon"
+                src="assets/play.svg"
+                alt="Play/Pause"
+                draggable="false"
+              />
+            </button>
+            <button id="nextButton" class="control-button">
+              <img
+                src="assets/skip-forward.svg"
+                alt="Next Track"
+                draggable="false"
+              />
+            </button>
+            <button
+              id="repeatButton"
+              class="control-button control-button-small"
+            >
+              <img
+                src="assets/repeat-solid.svg"
+                alt="Repeat"
+                draggable="false"
+              />
+              <div
+                id="repeatOne"
+                style="position: absolute; display: none"
+              ></div>
+            </button>
+          </div>
+          <span id="duration">0:00</span>
+        </div>
+      </div>
+
+      <div class="player-right-controls">
+        <div id="progressText"></div>
+        <div class="volume-slider">
+          <div id="volumeHandle" class="volume-handle"></div>
+          <progress id="volumeControl" value="1" max="1"></progress>
+        </div>
+        <button id="loadButton" class="control-button right-button">
+          <img
+            src="assets/upload-solid.svg"
+            alt="Add Library Folder"
+            draggable="false"
+          />
         </button>
-        <div className="track-details-text" id="currentTrackArtist">
-          No Artist
-        </div>
       </div>
-    </div>
-
-    <div class="player-middle-controls">
-      <div class="player-middle-upper">
-        <progress id="progressBar" value="0" max="100" class="progress"></progress>
-      </div>
-      <div class="player-middle-lower">
-        <span id="elapsed">0:00</span>
-        <div class="player-middle-lower-centre">
-          <button id="shuffleButton" class="control-button control-button-small">
-            <img src="assets/shuffle-solid.svg" alt="Shuffle" draggable="false" />
-          </button>
-          <button id="prevButton" class="control-button">
-            <img src="assets/skip-back.svg" alt="Previous Track" draggable="false" />
-          </button>
-          <button id="pauseButton" class="control-button control-button-big">
-            <img id="playPauseIcon" src="assets/play.svg" alt="Play/Pause" draggable="false" />
-          </button>
-          <button id="nextButton" class="control-button">
-            <img src="assets/skip-forward.svg" alt="Next Track" draggable="false" />
-          </button>
-          <button id="repeatButton" class="control-button control-button-small">
-            <img src="assets/repeat-solid.svg" alt="Repeat" draggable="false" />
-            <div id="repeatOne" style="position: absolute; display: none;"></div>
-          </button>
-        </div>
-        <span id="duration">0:00</span>
-      </div>
-    </div>
-
-    <div class="player-right-controls">
-      <div id="progressText"></div>
-      <div class="volume-slider">
-        <div id="volumeHandle" class="volume-handle"></div>
-        <progress id="volumeControl" value="1" max="1"></progress>
-      </div>
-      <button id="loadButton" class="control-button right-button">
-        <img src="assets/upload-solid.svg" alt="Add Library Folder" draggable="false" />
-      </button>
-    </div>
-  </footer>
-</body>
-
+    </footer>
+  </body>
 </html>

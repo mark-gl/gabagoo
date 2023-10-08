@@ -29,21 +29,91 @@ document.addEventListener("DOMContentLoaded", (event) => {
       }
     },
     columnDefs: [
-      { field: "title", headerName: "Title", resizable: true, sortable: true, flex: 2 },
       {
-        field: "length", headerName: "Length", resizable: true, sortable: true, filter: false, flex: 0.5, cellRenderer: function (params) {
-          return formatDuration(params.value);
-        }
+        field: "title",
+        headerName: "Title",
+        resizable: true,
+        sortable: true,
+        flex: 2,
       },
-      { field: "artist", headerName: "Artist", resizable: true, sortable: true, flex: 1 },
-      { field: "album artist", headerName: "Album Artist", resizable: true, sortable: true, flex: 1 },
-      { field: "album", headerName: "Album", resizable: true, sortable: true, flex: 1 },
-      { field: "genre", headerName: "Genre", resizable: true, sortable: true, flex: 1 },
-      { field: "year", headerName: "Year", resizable: true, sortable: true, flex: 0.5 },
-      { field: "disc", headerName: "Disc #", resizable: true, sortable: true, hide: true, flex: 0.5 },
-      { field: "track", headerName: "Track #", resizable: true, sortable: true, hide: true, flex: 0.5 },
-      { field: "composer", headerName: "Composer", resizable: true, sortable: true, hide: true, flex: 0.5 },
-      { field: "comments", headerName: "Comments", resizable: true, sortable: true, hide: true, flex: 0.5 },
+      {
+        field: "length",
+        headerName: "Length",
+        resizable: true,
+        sortable: true,
+        filter: false,
+        flex: 0.5,
+        cellRenderer: function (params) {
+          return formatDuration(params.value);
+        },
+      },
+      {
+        field: "artist",
+        headerName: "Artist",
+        resizable: true,
+        sortable: true,
+        flex: 1,
+      },
+      {
+        field: "album artist",
+        headerName: "Album Artist",
+        resizable: true,
+        sortable: true,
+        flex: 1,
+      },
+      {
+        field: "album",
+        headerName: "Album",
+        resizable: true,
+        sortable: true,
+        flex: 1,
+      },
+      {
+        field: "genre",
+        headerName: "Genre",
+        resizable: true,
+        sortable: true,
+        flex: 1,
+      },
+      {
+        field: "year",
+        headerName: "Year",
+        resizable: true,
+        sortable: true,
+        flex: 0.5,
+      },
+      {
+        field: "disc",
+        headerName: "Disc #",
+        resizable: true,
+        sortable: true,
+        hide: true,
+        flex: 0.5,
+      },
+      {
+        field: "track",
+        headerName: "Track #",
+        resizable: true,
+        sortable: true,
+        hide: true,
+        flex: 0.5,
+      },
+      {
+        field: "composer",
+        headerName: "Composer",
+        resizable: true,
+        sortable: true,
+        hide: true,
+        flex: 0.5,
+      },
+      {
+        field: "comments",
+        headerName: "Comments",
+        resizable: true,
+        sortable: true,
+        hide: true,
+        flex: 0.5,
+      },
     ],
     onRowDoubleClicked: function (event) {
       const index = tracks.findIndex((track) => track.url === event.data.url);
@@ -54,26 +124,32 @@ document.addEventListener("DOMContentLoaded", (event) => {
     rowData: [],
   };
 
-  const contextMenu = document.getElementById('contextMenu');
-  let menuItemsHTML = '<div>';
-  const columnDefs = [...gridOptions.columnDefs].sort((a, b) => a.headerName.localeCompare(b.headerName));
+  const contextMenu = document.getElementById("contextMenu");
+  let menuItemsHTML = "<div>";
+  const columnDefs = [...gridOptions.columnDefs].sort((a, b) =>
+    a.headerName.localeCompare(b.headerName)
+  );
   for (let colDef of columnDefs) {
-    menuItemsHTML += `<div><input type="checkbox" id="${colDef.field}" ${!colDef.hide ? 'checked' : ''} />${colDef.headerName}</div>`;
+    menuItemsHTML += `<div><input type="checkbox" id="${colDef.field}" ${
+      !colDef.hide ? "checked" : ""
+    } />${colDef.headerName}</div>`;
   }
-  menuItemsHTML += '</div>';
+  menuItemsHTML += "</div>";
   contextMenu.innerHTML = menuItemsHTML;
   document.body.appendChild(contextMenu);
   for (let colDef of gridOptions.columnDefs) {
-    document.getElementById(colDef.field).addEventListener('change', function () {
-      gridOptions.columnApi.setColumnVisible(colDef.field, this.checked);
-    });
+    document
+      .getElementById(colDef.field)
+      .addEventListener("change", function () {
+        gridOptions.columnApi.setColumnVisible(colDef.field, this.checked);
+      });
   }
-  
+
   const eGridDiv = document.querySelector("#myGrid");
 
   new Grid(eGridDiv, gridOptions);
 
-  gridOptions.api.addEventListener('sortChanged', function () {
+  gridOptions.api.addEventListener("sortChanged", function () {
     const newTracks = [];
     // (This is bad)
     for (let i = 0; i < gridOptions.api.getDisplayedRowCount(); i++) {
@@ -83,21 +159,23 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
     const currentTrackUrl = tracks[currentTrackIndex].url;
     tracks = newTracks;
-    currentTrackIndex = tracks.findIndex(track => track.url === currentTrackUrl);
+    currentTrackIndex = tracks.findIndex(
+      (track) => track.url === currentTrackUrl
+    );
     gridOptions.api.redrawRows();
   });
 
-  var headerViewport = document.querySelector('.ag-header-viewport');
-  headerViewport.addEventListener('contextmenu', function (e) {
+  var headerViewport = document.querySelector(".ag-header-viewport");
+  headerViewport.addEventListener("contextmenu", function (e) {
     e.preventDefault();
-    contextMenu.style.display = 'block';
+    contextMenu.style.display = "block";
     contextMenu.style.left = `${e.clientX}px`;
     contextMenu.style.top = `${e.clientY}px`;
   });
 
-  window.addEventListener('mousedown', function (e) {
+  window.addEventListener("mousedown", function (e) {
     if (!contextMenu.contains(e.target)) {
-      contextMenu.style.display = 'none';
+      contextMenu.style.display = "none";
     }
   });
 
@@ -112,27 +190,34 @@ document.addEventListener("DOMContentLoaded", (event) => {
     nextTrack(false);
   });
 
-  document.getElementById('shuffleButton').addEventListener('click', function () {
-    this.classList.toggle('selected');
-    isShuffle = !isShuffle;
-  });
+  document
+    .getElementById("shuffleButton")
+    .addEventListener("click", function () {
+      this.classList.toggle("selected");
+      isShuffle = !isShuffle;
+    });
 
-  document.getElementById('repeatButton').addEventListener('click', function () {
-    var repeatOne = document.getElementById('repeatOne');
+  document
+    .getElementById("repeatButton")
+    .addEventListener("click", function () {
+      var repeatOne = document.getElementById("repeatOne");
 
-    if (this.classList.contains('selected') && repeatOne.style.display === 'none') {
-      repeatOne.style.display = 'inline';
-      isRepeatOne = true;
-      isRepeat = false;
-    } else if (this.classList.contains('selected')) {
-      this.classList.remove('selected');
-      repeatOne.style.display = 'none';
-      isRepeatOne = false;
-    } else {
-      this.classList.add('selected');
-      isRepeat = true;
-    }
-  });
+      if (
+        this.classList.contains("selected") &&
+        repeatOne.style.display === "none"
+      ) {
+        repeatOne.style.display = "inline";
+        isRepeatOne = true;
+        isRepeat = false;
+      } else if (this.classList.contains("selected")) {
+        this.classList.remove("selected");
+        repeatOne.style.display = "none";
+        isRepeatOne = false;
+      } else {
+        this.classList.add("selected");
+        isRepeat = true;
+      }
+    });
 
   function getOffsetLeft(elem) {
     var offsetLeft = 0;
@@ -140,7 +225,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       if (!isNaN(elem.offsetLeft)) {
         offsetLeft += elem.offsetLeft;
       }
-    } while (elem = elem.offsetParent);
+    } while ((elem = elem.offsetParent));
     return offsetLeft;
   }
 
@@ -152,9 +237,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
       progressMouseDown = true;
       const progressBarWidth = this.offsetWidth;
       const clickPosition = e.pageX - getOffsetLeft(this);
-      const percentage = clickPosition / progressBarWidth * 100;
+      const percentage = (clickPosition / progressBarWidth) * 100;
       progressBar.value = isFinite(percentage) ? percentage : 0;
-      const duration = Math.min(audio.duration, Math.max(0, clickPosition / progressBarWidth * audio.duration));
+      const duration = Math.min(
+        audio.duration,
+        Math.max(0, (clickPosition / progressBarWidth) * audio.duration)
+      );
       document.getElementById("elapsed").textContent = formatDuration(duration);
     }
   });
@@ -163,9 +251,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (progressMouseDown) {
       const progressBarWidth = progressBar.offsetWidth;
       const clickPosition = e.pageX - getOffsetLeft(progressBar);
-      const percentage = clickPosition / progressBarWidth * 100;
+      const percentage = (clickPosition / progressBarWidth) * 100;
       progressBar.value = isFinite(percentage) ? percentage : 0;
-      const duration = Math.min(audio.duration, Math.max(0, clickPosition / progressBarWidth * audio.duration));
+      const duration = Math.min(
+        audio.duration,
+        Math.max(0, (clickPosition / progressBarWidth) * audio.duration)
+      );
       document.getElementById("elapsed").textContent = formatDuration(duration);
     }
   });
@@ -180,9 +271,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 
-  document.getElementById("currentTrackTitle").addEventListener("click", function () {
-    gridOptions.api.ensureIndexVisible(currentTrackIndex, 'middle');
-  });
+  document
+    .getElementById("currentTrackTitle")
+    .addEventListener("click", function () {
+      gridOptions.api.ensureIndexVisible(currentTrackIndex, "middle");
+    });
 
   function setVolume(newValue) {
     if (audio) {
@@ -196,8 +289,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const newVolume = minVolumeLevel * Math.exp(scale * newValue);
         if (newVolume > 1) {
           audio.volume = 1;
-        }
-        else {
+        } else {
           audio.volume = newVolume;
         }
       }
@@ -208,8 +300,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const progressBarWidth = volumeBar.offsetWidth;
     const clickPosition = e.pageX - getOffsetLeft(volumeBar);
     volumeBar.value = clickPosition / progressBarWidth;
-    var volumeHandle = document.getElementById('volumeHandle');
-    volumeHandle.style.left = (volumeBar.value * 100) + '%';
+    var volumeHandle = document.getElementById("volumeHandle");
+    volumeHandle.style.left = volumeBar.value * 100 + "%";
     setVolume(volumeBar.value);
   }
 
@@ -218,10 +310,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
     updateVolumeSlider(e);
   });
 
-  document.getElementById("volumeHandle").addEventListener("mousedown", function (e) {
-    volumeMouseDown = true;
-    updateVolumeSlider(e);
-  });
+  document
+    .getElementById("volumeHandle")
+    .addEventListener("mousedown", function (e) {
+      volumeMouseDown = true;
+      updateVolumeSlider(e);
+    });
 
   document.addEventListener("mousemove", function (e) {
     if (volumeMouseDown) {
@@ -285,9 +379,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     const fileHandles = await getAudioFileHandles(libraryDirectory);
     totalAudioFiles = fileHandles.length;
-    let progress = document.getElementById("progressText")
+    let progress = document.getElementById("progressText");
     if (progress != null) {
-      progress.textContent = "Loading... (0/" + totalAudioFiles + " files scanned)";
+      progress.textContent =
+        "Loading... (0/" + totalAudioFiles + " files scanned)";
     }
     const metadataPromises = fileHandles.map(dbFunctions.getMetadata);
 
@@ -300,12 +395,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
         let coverArt;
         if (metadata.common.picture && metadata.common.picture[0]) {
           let picture = metadata.common.picture[0];
-          coverArt = await dbFunctions.storeCoverArtGetHash(`data:${picture.format};base64,${picture.data.toString('base64')}`);
-        };
+          coverArt = await dbFunctions.storeCoverArtGetHash(
+            `data:${picture.format};base64,${picture.data.toString("base64")}`
+          );
+        }
 
-        if (metadata.native && metadata.native['ID3v2.3']) {
+        if (metadata.native && metadata.native["ID3v2.3"]) {
           const ID3v23Data = new Map(
-            metadata.native['ID3v2.3'].map((item) => [item.id, item.value])
+            metadata.native["ID3v2.3"].map((item) => [item.id, item.value])
           );
           track = {
             name: fileHandles[i].relativePath,
@@ -318,10 +415,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
             year: ID3v23Data.get("TYER"),
             index: tracks.length,
             coverArt: coverArt,
-            disc: Number(ID3v23Data.get("TPOS").split('/')[0]),
-            track: Number(ID3v23Data.get("TRCK").split('/')[0]),
+            disc: Number(ID3v23Data.get("TPOS").split("/")[0]),
+            track: Number(ID3v23Data.get("TRCK").split("/")[0]),
             composer: ID3v23Data.get("TCOM"),
-            comments: ID3v23Data.get("COMM") ? ID3v23Data.get("COMM").text : null,
+            comments: ID3v23Data.get("COMM")
+              ? ID3v23Data.get("COMM").text
+              : null,
           };
         } else if (metadata.native && metadata.native.iTunes) {
           const iTunesData = new Map(
@@ -338,8 +437,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
             year: iTunesData.get("\u00A9day"),
             index: tracks.length,
             coverArt: coverArt,
-            disc: Number(iTunesData.get("disk").split('/')[0]),
-            track: Number(iTunesData.get("trkn").split('/')[0]),
+            disc: Number(iTunesData.get("disk").split("/")[0]),
+            track: Number(iTunesData.get("trkn").split("/")[0]),
             composer: iTunesData.get("\u00A9wrt"),
             comments: iTunesData.get("\u00A9cmt"),
           };
@@ -371,7 +470,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
       track.url = url;
       tracks.push(track);
 
-      progress.innerHTML = "Loading... (" + (i - 1) + "/" + totalAudioFiles + " files scanned)";
+      progress.innerHTML =
+        "Loading... (" + (i - 1) + "/" + totalAudioFiles + " files scanned)";
       gridOptions.api.applyTransaction({ add: [track] });
     }
     progress.innerHTML = "";
@@ -393,11 +493,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
       document.getElementById("currentTrackTitle").textContent = track.title;
       document.getElementById("currentTrackArtist").textContent = track.artist;
-      document.getElementById("duration").textContent = formatDuration(track.length);
+      document.getElementById("duration").textContent = formatDuration(
+        track.length
+      );
       currentTrackIndex = index;
       audio.addEventListener("timeupdate", function () {
         if (!progressMouseDown) {
-          document.getElementById("elapsed").textContent = formatDuration(audio.currentTime);
+          document.getElementById("elapsed").textContent = formatDuration(
+            audio.currentTime
+          );
           const progressBar = document.getElementById("progressBar");
           const percentage = (audio.currentTime / audio.duration) * 100;
           progressBar.value = isFinite(percentage) ? percentage : 0;
@@ -409,29 +513,27 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
       const coverArtData = await dbFunctions.getCoverArt(track.coverArt);
       document.getElementById("currentTrackArt").src = coverArtData;
-      if ('mediaSession' in navigator) {
+      if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
           title: track.title,
           artist: track.artist,
           album: track.album,
           // TODO: fix type
-          artwork: [
-            { src: coverArtData, sizes: '512x512', type: 'image/png' }
-          ]
+          artwork: [{ src: coverArtData, sizes: "512x512", type: "image/png" }],
         });
-        navigator.mediaSession.setActionHandler('play', function () {
+        navigator.mediaSession.setActionHandler("play", function () {
           pauseAudio();
         });
 
-        navigator.mediaSession.setActionHandler('pause', function () {
+        navigator.mediaSession.setActionHandler("pause", function () {
           pauseAudio();
         });
 
-        navigator.mediaSession.setActionHandler('previoustrack', function () {
+        navigator.mediaSession.setActionHandler("previoustrack", function () {
           previousTrack();
         });
 
-        navigator.mediaSession.setActionHandler('nexttrack', function () {
+        navigator.mediaSession.setActionHandler("nexttrack", function () {
           nextTrack(false);
         });
       }
@@ -446,14 +548,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
     if (autoNext && isRepeatOne) {
       nextTrackIndex = currentTrackIndex;
-    } else if (!isShuffle && currentTrackIndex !== null && currentTrackIndex < tracks.length - 1) {
+    } else if (
+      !isShuffle &&
+      currentTrackIndex !== null &&
+      currentTrackIndex < tracks.length - 1
+    ) {
       nextTrackIndex = currentTrackIndex + 1;
-    } else if (!isShuffle && isRepeat && currentTrackIndex === tracks.length - 1) {
+    } else if (
+      !isShuffle &&
+      isRepeat &&
+      currentTrackIndex === tracks.length - 1
+    ) {
       nextTrackIndex = 0;
     }
     if (!autoNext && isRepeatOne) {
-      var repeatOne = document.getElementById('repeatOne');
-      repeatOne.style.display = 'none';
+      var repeatOne = document.getElementById("repeatOne");
+      repeatOne.style.display = "none";
       isRepeatOne = false;
       isRepeat = true;
     }
@@ -477,8 +587,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
     if (previousTrackIndex !== null) {
       if (isRepeatOne) {
-        var repeatOne = document.getElementById('repeatOne');
-        repeatOne.style.display = 'none';
+        var repeatOne = document.getElementById("repeatOne");
+        repeatOne.style.display = "none";
         isRepeatOne = false;
         isRepeat = true;
       }
@@ -490,14 +600,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (audio && !audio.paused) {
       audio.pause();
       document.getElementById("playPauseIcon").src = "assets/play.svg";
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'paused';
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.playbackState = "paused";
       }
     } else if (audio) {
       audio.play();
       document.getElementById("playPauseIcon").src = "assets/pause.svg";
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'playing';
+      if ("mediaSession" in navigator) {
+        navigator.mediaSession.playbackState = "playing";
       }
     }
   }
