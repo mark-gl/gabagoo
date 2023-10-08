@@ -18,9 +18,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   dbFunctions.init();
 
-  const gridOptions = {
+  const grid = {
     suppressCellFocus: true,
     suppressDragLeaveHidesColumns: true,
+    animateRows: true,
     rowSelection: "multiple",
     getRowStyle: function (params) {
       if (params.node.rowIndex === currentTrackIndex) {
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   const contextMenu = document.getElementById("contextMenu");
   let menuItemsHTML = "<div>";
-  const columnDefs = [...gridOptions.columnDefs].sort((a, b) =>
+  const columnDefs = [...colDefs].sort((a, b) =>
     a.headerName.localeCompare(b.headerName)
   );
   for (let colDef of columnDefs) {
@@ -56,23 +57,24 @@ document.addEventListener("DOMContentLoaded", (event) => {
   menuItemsHTML += "</div>";
   contextMenu.innerHTML = menuItemsHTML;
   document.body.appendChild(contextMenu);
-  for (let colDef of gridOptions.columnDefs) {
+
+  const gridDiv = document.querySelector("#myGrid");
+  const gridOptions = grid;
+  new Grid(gridDiv, gridOptions);
+
+  for (let colDef of colDefs) {
     document
       .getElementById(colDef.field)
       .addEventListener("change", function () {
-        gridOptions.columnApi.setColumnVisible(colDef.field, this.checked);
+        grid.columnApi.setColumnVisible(colDef.field, this.checked);
       });
   }
 
-  const eGridDiv = document.querySelector("#myGrid");
-
-  new Grid(eGridDiv, gridOptions);
-
-  gridOptions.api.addEventListener("sortChanged", function () {
+  grid.api.addEventListener("sortChanged", function () {
     const newTracks = [];
     // (This is bad)
-    for (let i = 0; i < gridOptions.api.getDisplayedRowCount(); i++) {
-      const rowNode = gridOptions.api.getDisplayedRowAtIndex(i);
+    for (let i = 0; i < grid.api.getDisplayedRowCount(); i++) {
+      const rowNode = grid.api.getDisplayedRowAtIndex(i);
       const track = rowNode.data;
       newTracks.push(track);
     }
@@ -81,7 +83,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     currentTrackIndex = tracks.findIndex(
       (track) => track.url === currentTrackUrl
     );
-    gridOptions.api.redrawRows();
+    grid.api.redrawRows();
   });
 
   var headerViewport = document.querySelector(".ag-header-viewport");
@@ -98,14 +100,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 
-  const button1 = document.getElementById("loadButton");
-  button1.addEventListener("click", loadAudioFiles);
-  const button2 = document.getElementById("prevButton");
-  button2.addEventListener("click", previousTrack);
-  const button3 = document.getElementById("pauseButton");
-  button3.addEventListener("click", pauseAudio);
-  const button4 = document.getElementById("nextButton");
-  button4.addEventListener("click", function () {
+  document
+    .getElementById("loadButton")
+    .addEventListener("click", loadAudioFiles);
+
+  document
+    .getElementById("prevButton")
+    .addEventListener("click", previousTrack);
+
+  document.getElementById("pauseButton").addEventListener("click", pauseAudio);
+
+  document.getElementById("nextButton").addEventListener("click", function () {
     nextTrack(false);
   });
 
@@ -193,7 +198,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   document
     .getElementById("currentTrackTitle")
     .addEventListener("click", function () {
-      gridOptions.api.ensureIndexVisible(currentTrackIndex, "middle");
+      grid.api.ensureIndexVisible(currentTrackIndex, "middle");
     });
 
   function setVolume(newValue) {
@@ -385,14 +390,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
       progress.innerHTML =
         "Loading... (" + (i - 1) + "/" + totalAudioFiles + " files scanned)";
-      gridOptions.api.applyTransaction({ add: [track] });
+      grid.api.applyTransaction({ add: [track] });
     }
     progress.innerHTML = "";
   }
 
   async function loadAudio(index) {
     currentTrackIndex = index;
-    gridOptions.api.redrawRows();
+    grid.api.redrawRows();
     if (audio) {
       audio.pause();
       document.getElementById("playPauseIcon").src = "assets/play.svg";
