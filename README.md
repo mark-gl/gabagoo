@@ -2,12 +2,14 @@
 
 ![Screenshot of player](image.png)
 
-A relatively bare-bones demo of a browser-based music player using the File System API, featuring:
+A small demo of a browser-based music player using the File System API, featuring:
 
 - Support for ID3 and iTunes metadata
 - Album art display
 - Ability to show/hide specific columns by right clicking header
 - MediaSession support allowing the use of system playback controls
+
+(Check out [Aria](https://github.com/aria-player/aria) for a fully featured cross-platform music player which evolved from this demo!)
 
 ## Building and running
 
