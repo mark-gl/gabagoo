@@ -1,27 +1,27 @@
-## gabagoo: javascript music player demo
+# gabagoo: javascript music player demo
 
 ![Screenshot of player](image.png)
 
 A relatively bare-bones demo of a browser-based music player using the File System API, featuring:
 
-* Support for ID3 and iTunes metadata
-* Album art display
-* Ability to show/hide specific columns by right clicking header
-* MediaSession support allowing the use of system playback controls
+- Support for ID3 and iTunes metadata
+- Album art display
+- Ability to show/hide specific columns by right clicking header
+- MediaSession support allowing the use of system playback controls
 
-### Building and running
+## Building and running
 
-1.  Clone and run in this directory `yarn`
+1. Clone and run `bun install` in this directory
 
-2.  Run `yarn build` to build the app
+2. Run `bun build` to build the app
 
-3.  Open index.html.
+3. Open index.html.
 
-Alternatively, run `yarn dev` to watch for code changes and rebuild automatically.
+Alternatively, run `bun dev` to watch for code changes and rebuild automatically.
 
-### Usage
+## Usage
 
-To add tracks to the library, click the 'upload' button in the bottom right. Pick a folder containing music (or containing subfolders with music in them) and the library will populate. 
+To add tracks to the library, click the 'upload' button in the bottom right. Pick a folder containing music (or containing subfolders with music in them) and the library will populate.
 
 Once you have loaded your music library, double-click any track to start playback.
 
