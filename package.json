@@ -3,20 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "watchify src/app.js -p esmify -o src/app-bundled.js",
-    "build": "browserify src/app.js -p esmify -o src/app-bundled.js"
+    "dev": "bun build src/app.js --outfile src/app-bundled.js --target browser --watch",
+    "build": "bun build src/app.js --outfile src/app-bundled.js --target browser"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "ag-grid-community": "^29.3.5",
-    "browserify": "^17.0.0",
-    "esmify": "^2.1.1",
     "js-sha256": "^0.9.0",
     "music-metadata-browser": "^2.5.10"
-  },
-  "devDependencies": {
-    "watchify": "^4.0.0"
   }
 }

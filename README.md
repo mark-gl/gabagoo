@@ -15,7 +15,7 @@ A small demo of a browser-based music player using the File System API, featurin
 
 1. Clone and run `bun install` in this directory
 
-2. Run `bun build` to build the app
+2. Run `bun run build` to build the app
 
 3. Open index.html.
 
